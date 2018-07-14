@@ -1,0 +1,219 @@
+			day20   Note
+
+IP: 192.168.1.103
+
+复习：
+1. 打开文件的属性
+	r
+	w
+	a
+	r+
+	w+
+	a+
+	
+2. 文件操作函数
+（1）字符读写
+	 fgetc()/fputc()
+（2）行读写
+	 fgets()/fputs()
+（3）格式化读写
+	 fscanf()/fprintf()
+（4）rewind()
+		将文件内部指针回到文件首
+
+作业：
+1. fgets()/fputs() 实现文件的拷贝
+		./copy file1 file2
+		
+2. 试写程序实现比较两个文件的内容
+	若完全相同则输出相同
+	若不同，则输出第一个不同行的内容
+	
+===============================================
+1. 块读写
+（1）fread():读
+		size_t fread( void *ptr, 
+		   			  size_t size, 
+		   			  size_t nmemb, 
+		   			  FILE *stream);
+
+		ptr：保存内容内存的首地址
+		size：每次读取的块的大小
+		nmemb：每次读取的块数
+		stream：从指定的文件流中读取数据
+
+（2）fwrite():写
+        size_t fwrite(const void *ptr, 
+        			  size_t size, 
+        			  size_t nmemb,
+                      FILE *stream);
+
+（3）内存操作函数
+	 malloc()/free()
+	 
+	 memset();	//内存块的初始化
+	 memcpy();	//内存块的拷贝
+	 memcmp(); 	//内存块的比较
+
+
+2. 链表的读写
+	//写文件
+	void writeToFile(perNode *pHead);
+	
+	//读文件
+	//方法一：返回链表头节点的地址
+	perNode *readFromFile(); 
+	perNode *pHead = readFromFile();
+	
+	//方法二：传参形式
+	int readFile(perNode *pHead);
+	perNode *pHead = makeNode()
+	readFile(pHead);
+
+3. 预处理语句
+（1）宏
+	 a. 系统定义的宏
+	  	__func__:当前语句所在函数名
+	  	__FILE__:当前语句所在文件名
+		__LINE__:当前语句所在行的行号
+		__TIME__:显示当前时间
+		__DATE__:显示当前日期
+
+	 b. 基本宏定义 --- #define
+	 	#define 宏名 替换内容
+	 	
+	 	宏名一般是全大写
+	 	
+	 	宏定义的位置一般放在头文件之后
+	 	函数定义之外
+	 	
+	 	#define LEN 7
+	 	#define SIZE sizeof(struct perInfo)
+	 	#define OUT printf("HELLO\n");
+	 	#define INIT_STRING "\0"
+	 	#define CHARACTER '\0'
+	 	
+	 c. 取消宏
+	 	#undef 宏名  		//取消宏
+	 
+	 d. 其他情况
+	 	#define MAX(a,b) a>b?a:b
+		对于带参宏，后面的操作应当适当的加 ()
+		如：
+			#define MAX(a,b) ((a)>(b))?(a):(b)
+
+		带参宏和宏参数之间不能有空格
+		即以下写法不可：
+			#define MAX (a,b) ((a)>(b))?(a):(b)
+
+	 e. # 在宏中的使用
+	 
+	 f. ## 在宏中的使用
+			#define getMax(type, name) \
+			type get##name##Max(type a, type b)\
+			{\
+				return a>b?a:c;\
+			}		
+
+（2）条件预处理
+	a. #include 
+		包含文件
+		//库头文件的一般包含形式
+		#include<head.h>
+			从库中优先查找头文件
+		
+		//自定义头文件的一般包含形式
+		#include"headSelf.h"
+			优先在当前目录下查找头文件，若不存在
+			则到库中查找		
+			
+	b. #if 条件1
+	   #elif 条件2
+	   #elif 条件n	   
+	   #esle
+	   #endif
+	   
+	   代码段的注释/测试
+	   #if 0 	//注释
+	   	//代码段
+	   #endif
+	   
+	c. 如果宏存在，则执行以下代码
+		 #ifdef 
+	     #endif
+	   
+	d. 如果宏不存在，则执行以下代码
+	   #ifndef
+	   #endif
+		
+		一般用于头文件中(.h),防止头文件的重复包含
+		
+		#ifndef __HEAD_H__
+		#define __HEAD_H__
+		
+		//代码
+		
+		#endif
+
+
+4. gcc 四步
+（1）预处理
+		a. 替换所有的宏,并删除宏定义
+		b. 删除所有注释
+		c. 包含相应的头文件
+		
+		gcc -E file.c -o file.i
+		
+（2）编译 --- 汇编文件
+	 语法检查,生成相应的汇编文件
+	 
+	 gcc -S file.i -o file.S
+
+（3）生成二进制文件
+	 
+	 gcc -c file.S -o file.o
+
+（4）链接---可执行
+		链接动态库
+		
+	gcc file.o -o file
+	gcc -o file file.o
+
+	综合使用：
+		gcc file.c -o file
+		gcc -o file file.c
+
+5. 多文件的拆分
+（1）必要性
+	 便于工程管理
+	 便于测试和修改
+
+（2）源文件 & 头文件
+	 源文件：
+	 	函数定义
+	 	全局变量
+	
+	 头文件：
+		库头文件
+	 	结构声明
+	 	枚举声明
+	 	联合声明
+	 	函数声明
+	 	宏定义
+		等
+
+	 一个源文件对应一个头文件
+
+
+
+
+
+
+
+
+
+
+
+
+
+

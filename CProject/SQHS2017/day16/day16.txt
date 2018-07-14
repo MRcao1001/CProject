@@ -1,0 +1,226 @@
+					day16   Note
+IP: 192.168.1.101
+
+复习：
+1. 结构体定义 & 初始化
+	有名结构
+	无名结构（使用）
+	
+	memset();
+	void *memset(void *s, int c, size_t n);
+	
+	初始化结构
+	数组
+	
+	memset(buf, 0, sizeof(buf));
+	strcpy(buf, arr);
+	
+2. 结构体数组 & 结构指针
+	struct 结构名 数组名[size];
+	    0～size-1
+	    
+	struct 结构名 *指针名;
+		大小确定：4 / 8 Byte
+	
+	malloc / free
+	   //从堆上分配空间
+       void *malloc(size_t size);
+       
+       //释放 malloc 所得到的空间
+       //同一块内存空间只能释放一次
+       void free(void *ptr);	
+
+3. 结构成员的访问
+	a. 结构变量名.成员名;
+	b. 结构指针名->成员名;
+	c. (*结构指针名).成员名;
+
+4. 结构体大小问题
+
+5. 结构的位域
+	struct person
+	{
+		int a:2; 	//a 占据 2 bit
+		unsigned int b:3; //3 bit
+		int :1;		// 1 bit,无名位域，位填充
+		int c:3;    // 3 bit
+	};
+
+===============================================
+1. 选择排序
+	int arr[5] = {8,2,4,6,1};
+	
+	arr[0]  arr[1]  arr[2]  arr[3]  arr[4]
+初始:  8       6       4       2       1
+一次:  1       6       4       2       8
+二次:  1       2       4       6       8
+
+	每趟排序记录当前数为最值，依次与后续数据
+	进行比较，找到比它大或者小的数，然后记录
+	较小的数的下标，依次类推
+第一趟：
+	min = 0;
+	arr[min]  arr[1]  ---> min = 1
+	arr[min]  arr[2]  ---> min = 1
+	arr[min]  arr[3]  ---> min = 1
+	arr[min]  arr[4]  ---> min = 4
+
+	结果：
+		交换 arr[min] 和 arr[0]
+
+第二趟：
+	min = 1;
+	arr[min]  arr[2]  ---> min = 2
+	arr[min]  arr[3]  ---> min = 3
+	arr[min]  arr[4]  ---> min = 3
+
+	结果：
+		交换 arr[min] 和 arr[1]
+
+第三趟：
+	min = 2;
+	arr[min]  arr[3]  ---> min = 2
+	arr[min]  arr[4]  ---> min = 2
+
+	结果：
+		不用交换
+
+第四趟：
+	min = 3;
+	arr[min]  arr[4]  ---> min = 3
+
+	结果：
+		不用交换
+		
+2. 联合体
+（1）联合体的定义形式
+	 a. 所有成员共用一块内存空间
+	 	以成员中宽度最大的成员进程分配空间
+	 	
+	 b. 每次只能操作其中一个成员
+	 
+	 union 联合名称
+	 {
+	 	//成员列表
+	 };
+
+	 union per
+	 {
+	 	int a;
+	 	char buf[32];
+	 	char c;
+	 };
+
+3. 枚举类型
+	enum 枚举名
+	{
+		//成员列表（整型常量或者字符常量）
+	};
+
+	枚举类型成员列表的默认值是从 0 开始
+	逐次递增
+	
+	设定初值，则从指定初始值开始逐次递增
+	
+	枚举用于 switch-case
+
+4. 函数参数
+（1）数组作为函数参数
+	 当数组作为函数参数时，自动转化为
+	 同类型的指针
+	 
+	 数组作为函数参数并非值传递，将一个个数组
+	 元素挨个传递，而是地址传递，传递的是数组
+	 的首地址
+	 
+（2）结构作为函数参数
+	 a. 传递结构中具体的某个成员
+	 b. 结构作为一个整体进行传递
+	 c. 传递结构指针
+
+5. typedef
+（1）区别名
+	 typedef unsitned int INT;
+
+（2）结构取别名
+	  typedef struct 结构名
+	  {
+	  	//成员列表
+	  }结构别名;
+
+	 typedef struct 结构名  结构别名;
+ 
+ 	 #define 结构宏名 struct 结构名
+ 
+（3）结构指针
+	  typedef struct 结构名
+	  {
+	  	//成员列表
+	  }*结构指针别名;
+	  
+	  typedef struct 结构名* 结构别名;
+	  
+	  typedef struct  person
+	  {
+	  	int age;
+	  	char name[32];
+	  }*pPer;
+ 
+ 	 pPer pstu = NULL;	//pstu 为结构指针
+ 	 
+ 	 #define 结构指针宏名 struct 结构名*
+ 	 #define pM struct person *
+ 	 
+ 	//struct person *p1,*p2;
+ 	pPer p1,p2;
+ 	
+ 	//struct person *p3,p4;
+ 	pM p3,p4;
+ 
+6. 再看结构指针
+	typedef struct personInfo
+	{
+		int age;
+		char name[32];
+		//PerInfo *a; 	//Error
+		struct personInfo *pNext;
+	}PerInfo;
+
+	PerInfo boy;
+	PerInfo *pStu = &boy;	//结构指针的使用(一)
+	
+	//结构指针的使用(二)
+	PerInfo *pstu = (PerInfo*)malloc(sizeof(PerInfo)); 	
+	
+	free(pstu);
+
+7. 
+
+	head-->1-->2-->3-->4-->5-->6-->7-->NULL
+
+8. 作业：
+（1）实现链表的销毁
+	即 main 函数结束前，free 掉所有 malloc 得到
+	的空间
+
+（2）实现链表的任意插入
+	 输入链表上的一个位置,在该位置插入一个
+	 新的节点
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

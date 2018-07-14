@@ -1,0 +1,313 @@
+			day11   Note
+
+IP: 192.168.155.7
+
+复习：
+1. 指针的定义和初始化
+	类型说明符 *指针变量名;
+	
+	不明确指针用途，初始化为 NULL
+	明确指针用途，初始化为 确定地址
+
+2. 指针的运算
+	减法运算
+	自增/自减
+
+	指针的关系运算
+	==
+	!=
+
+3. 两个概念
+	指针的类型
+		去掉变量名，剩余的部分
+	指针所指向的类型	
+		去掉变量名及其前面的一个 * 后剩余的部分
+
+4. 指针和数组
+	int arr[4];
+	int *pa = arr;
+	
+	pa++;
+	arr++;	//arr = arr + 1;Error
+
+	指针数组 & 数组指针
+	int *arr[4];
+	
+	int (*pArr)[4]; //int (*)[4] pArr;为了便于理解
+	
+	typedef int (*pArr)[4]; 
+	
+	int buf[4];
+	pArr pf;
+	pf = &buf;
+
+5. 二级指针
+	类型说明符 **指针变量名;
+	int a = 12;
+	int *pa = &a;
+	int **ppa = &pa;	//ppa = &pa;
+
+思考：
+	二维数组边缘数据的总和？
+	
+	int arr[ROW][COL]
+	
+	去除中间数据：
+	中间数据满足以下条件：
+		i > 0 && i < ROW-1 && j > 0 && j < COL-1
+
+=============================================
+1. 取别名:
+	typedef int INT;
+	int a = 5;
+	INT b = 3;	//int b = 3;
+
+2. 字符串
+（1）字符串的定义
+	 由双引号扩起来的字符序列，称之为字符串
+	 如：
+	 	"hefakf"  "@#$%^&*"  "ty 12 _-"
+	 
+	 由单引号扩起来的单个字母，数字或其他符号
+	 称之为字符
+	 如：
+	 	'1'  '$'  'L'  'j'  ' '  
+
+（2）在 C 语言里，没有字符串所对应的数据类型
+	 因此使用字符数组来保存字符串
+	 字符数组：
+	 
+	 	char arr[16] = {'1','2','H','*',' '};
+	 	char Arr[16] = {"HELLO,CHINA"};
+	 	char buf[16] = "hello,china";
+	 	char Buf[16] = {0};
+	 	char caBuf[16] = {'\0'};
+	 	char cBuf[16] = "\0";
+
+（3）字符串的输入和输出
+	a. scanf()/printf()
+		字符串的占位符: %s
+		字符串的结束标志： \0
+	
+		"a": 2 Byte 
+	    'a': 1 Byte
+	    
+		char arr[8] = {"a"};
+		char buf[8] = {'a'};
+	
+	练习：
+		输入一个字符串，计算其中
+			大写字母，小写字母，数字，空格以及
+			其他字符的数量。
+			
+			'a'~'z':97~122
+			'A'~'Z':65~90
+			'0'~'9':48~57
+	
+		scanf()接收单个字符可以，但不能接收
+		字符串中的空格。
+	
+	b. gets()/puts()
+		char *gets(char *s);
+		int puts(const char *s);
+			puts输出时，自动换行
+		
+	c. fgets()/fputs()
+	char *fgets(char *s, int size, FILE *stream);
+		s:保存字符串的地址
+		size:输入字符的大小
+		stream:文件流
+				stdin  --- 标准输入
+				stderr --- 标准错误输出
+			
+	int fputs(const char *s, FILE *stream);
+		s:要输出字符串的地址
+		stream:文件流
+				stdout --- 标准输出
+     
+（4）指针与字符串
+	 char arr[32] = "Hello, world";
+	 char *pa = arr;
+	 
+	 char *ps = NULL;	//OK
+	 
+	 char *pb;
+	 *pb = NULL;	//OK
+
+	 char *pc = "hello, world";
+	 char buf[32] = "hello, world";
+	 
+	 buf[0] = 'L';
+	 buf[1] = 'O';
+	 printf("%s\n", buf);
+
+	 pc[0] = 'O';	//*(pc) = 'O';   //error
+	 pc[1] = 'L';	//*(pc+1) = 'L'; //error
+	 printf("%s\n", pc);
+
+（5）字符串常量
+	 字符串常量代表了一个常量，同时也代表
+	 字符串常量的首地址，也表示一个数组名
+	 数组名就是字符串常量，因此可以将其当作
+	 一个数组理解
+    printf("%s\n", "hello,world");	//hello,world
+    printf("%p\n", "hello,world");	//0x400664
+    printf("%c\n", "hello,world"[0]);	//h
+    printf("%c\n", "hello,world"[0]+1);	//i
+    printf("%p\n", "hello,world"+1);	//0x400665
+
+	char *pc = "hello";
+	
+	const char *pc;
+	char const *pc;	//值不能更改
+	char *const pc; //地址不能更改
+	const char *const pc; //值和地址都不能更改
+	
+（6）练习
+   编一个程序，打入月份号，输出该月的英文月名。
+   例如，输入“3”，则输出“March”，
+   要求用指针数组处理
+
+			illeagal
+			January, February,  March,
+			April,   May,       June,
+			July,    August,    September,
+			October, November,  December
+
+（7）二维字符数组，字符数组指针，二级字符指针
+     指针字符数组
+
+	char arr[3][8] = {"Hello","China","SQHS17"};
+	char (*pArr)[8];
+	char **ppa;
+	char *pbuf[8] = {"January","July","August"};
+
+	printf("%s\n", arr[0]);
+	
+（8）
+	将一行字符中的每个单词的
+	第一个字母改写成大写字母。
+
+（9）字符串操作的相关函数 --- #include <string.h>
+	 strlen()
+	 strcpy()
+	 strcat()
+	 strcmp()
+
+	 strlen():字符串长度函数
+	 	size_t strlen(const char *s);
+	 	
+	 	strlen 计算长度时，不包括 '\0'
+	 	注意和 sizeof 的区别！
+	 
+	 strcpy():字符串拷贝函数
+	 char *strcpy(char *dest, const char *src);
+	 	dest:目的地址
+	 	src:源字符串地址
+	 
+	 //拷贝 src 中的前 n 个字节到 dest 中
+char *strncpy(char*dest,const char *src,size_t n);	
+	 strcmp():字符串比较函数
+	  int strcmp(const char *s1, const char *s2);
+		返回值：
+		=0: s1 和 s2 相等
+		<0: s1 < s2
+		>0: s1 > s2
+			
+int strncmp(const char *s1,const char *s2,size_t n)
+	 
+	 strcat():字符串拼接函数
+char *strcat(char *dest, const char *src);
+char *strncat(char *dest,const char *src,size_t n);
+
+
+
+作业：
+1. 编写一个程序，用于接收两个字符串，
+   判断第一个字符串中是否包含第二个字符串，
+   如果包含，输出第二个字符串在第一个字符串
+   中的位置（即第二个字符串中第一个字符在第
+   一个字符串中出现的位置）
+	
+2. 将两个字符串，合并保存到数组中	
+	不允许使用系统函数，使用指针完成！！
+
+3. 输入一个字符串，判断其是否为回文串？
+   例如：
+   输入:1234321 ， abcba 该字符串是回文串
+
+
+
+4. 自定义函数实现：(思考)
+	 int myStrlen(const char *s);
+	 {
+	 	return len;
+	 }
+	 
+	 char *myStrcpy(char *dest, const char *src);
+	 {
+	 
+	 	return dest;
+	 }
+	 
+	 
+	 char *myStrcat(char *dest, const char *src);
+	 {
+	 
+	 	return dest;
+	 }
+	 
+	 
+	 int myStrcmp(const char *s1, const char *s2);
+	 {
+	 
+	 	return 0; //return 1;  //return -1;
+	 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

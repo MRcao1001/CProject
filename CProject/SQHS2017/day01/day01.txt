@@ -1,0 +1,355 @@
+		day01   Note
+复习：
+1. 常用基本命令
+	find：按类型，文件名，拥有者进行查找
+	chmod： - rwx rwx rwx
+			a. 字符加权   b. 八进制加权
+			更改文件的权限
+	apt-get:
+			update
+			install 
+			remove
+			upgrade
+	dpkg: (.deb)
+		-i：安装软件
+		-r：移除软件
+		-c: 列出软件包的内容
+	
+	fdisk:	查看磁盘分区
+		Linux 下没有盘符的概念
+		sudo fdisk -l	
+		ntfsfix /dev/sdaN	(N：表示第几分区)
+	mount/umount：挂载/卸载
+		//sda 默认是 Linux 系统所在的硬盘
+		//挂载点必须存在
+		mount /dev/sdaN	挂载点
+		umount 挂载点		
+	
+		U 盘的默认挂载点：
+			/media/用户名/disk/
+	
+		挂载点：
+			/mnt/	用于挂载其他硬盘或分区
+			
+	tar:打包
+		打包压缩：
+			tar z(j)cvf file.tar.gz 文件列表
+		解包解压：	
+			tar z(j)xvf file.tar.gz	
+		打包：
+			tar cvf(cf) file.tar 文件列表
+		解包：
+			tar xvf(zf) file.tar	
+	
+2. 其他常用小命令
+	ping：检查网络的联通状况
+	ifconfig：查看IP，或者修改IP
+
+	free：查看内存使用情况
+	df：查看硬盘使用情况
+	du：查看文件所占磁盘空间大小
+	
+	cal 
+	cal -m 月份
+	cal -y 年份
+	
+	uname -a：查看系统详细信息
+	
+	date：查看详细时间
+
+3. vim 的安装，配置和使用
+	进入插入模式
+	复制，粘贴，撤销
+	删除：
+
+	可视化操作：
+		v：单个字符选中
+		V：行选中
+
+4. IDE
+	集成开发环境
+		Eclipse 
+		VS
+		codeBlocks
+		Qt
+
+==========================================	
+1. 学习要求
+（1）笔记，代码规范化，有条理
+	 按类放在不同的目录中
+（2）不要求做电子档笔记
+	 但是笔和纸需要有
+（3）敲代码速度无要求，但指法要正确
+	 其次练习速度
+
+2. C 语言的简单介绍
+（1）程序
+	 a. 为实现特定目标或解决特定功能，而用计算机语言
+	 	编写的代码
+	 b. 程序 = 算法 + 数据结构
+	 	算法：解决问题的具体方法或步骤
+	 	算法的优劣性：
+	 		时间复杂度：
+	 		空间复杂度：
+	 	几个特征：
+	 		有穷性：
+	 		确切性：每一步要明确
+	 		输入：可以有0个或多个输入
+	 		输出：至少要有一个输出
+
+	c. 数据结构
+		保存数据
+
+（2）C 程序
+	a. C 的源程序可以由一个或多个文件组成
+	b. 不管C程序由几个文件组成，但只能有一个 main 函数
+		main 函数 C 程序的入口
+	c. 每一条 C 语言语句必须以分号结尾
+		预处理语句，函数头，}后不能加分号
+
+3. hello,world
+（1）程序书写
+	#include<stdio.h>
+	int main(int argc, char *argv[])
+	{
+		printf("hello, world!\n");
+		return 0;
+	}
+	
+（2）编译运行
+	 gcc -v		//检查是否安装 gcc 编译工具
+	 sudo apt-get install gcc	//安装
+	 
+	 //编译
+	 gcc hello.c -o hello		//规范写法
+	 //默认生成可执行文件：a.out
+	 gcc hello.c 				//不规范写法	 
+	 
+	 //运行
+		 ./hello
+		 ./a.out
+	
+（3）程序讲解
+	#include<stdio.h>：预处理语句，一般放在源文件的开头
+	stdio.h：C 库（头文件），printf函数声明
+	
+	main函数的写法和注意事项：
+		//函数头
+		int main(int argc, char *argv[])
+		int main(int argc, char **argv)
+		/*
+			//mainParameter.c
+			argc: 从命令行传入 main 的参数个数
+			argv: 记录每个参数的名称
+		*/
+		int main(void)
+		int main()
+		
+		void main()		//移植性不好
+		main()			//不正规写法
+ 	
+ 	{}：
+ 		代码块
+ 	
+ 	printf():	
+ 		库函数 --- stdio.h 
+ 		输出函数
+ 		
+ 	"hello, world\n":字符串，由爽引号扩起来的
+ 	\n : 转义字符，表示回车换行
+ 	
+ 	return 0： 
+ 		表示函数结束，返回结果，
+ 		0表示程序正常结束
+ 
+4. 基本数据类型
+（1）常量，变量，变量名
+	 常量：1, 33, 'a', '/', "hello, world"
+	 		常量的值不能更改
+	 变量：计算机内存，在程序运行过程中其值可以改变
+	 	   使用前必须先定义！！
+	 变量名：标识计算机内存
+
+（2）数据类型
+	整型：
+		int a;	//定义一个整型变量
+		short	//短整型，short int
+		long	//长整型, long int
+		
+		占位符 ：%d
+
+（3）变量的定义
+	a. 只定义，未初始化
+	 int a;
+	 int b,c,d;	//定义多个整型变量，不建议
+	 
+	 //定义多个变量采用以下方式：
+	 int b;
+	 int c;
+	 int d;
+
+	b. 定义变量的同时初始化：
+	 //初始化的值可以任意，但要合法
+	 //一般初始化变量时，初始化为 0
+	 int a = 12;	 
+	 
+	 int b,c,d;
+	 //int b=c=d=5;	//Error
+	 int b,c,d=5;	//OK,但是只初始化了 d
+	 int b=5, c=5, d=5;		//OK
+	 
+	 //一般采用以下方法
+	 int b = 5;
+	 int c = 5;
+	 int d = 5;
+	 
+	c. 先定义，后初始化
+	 int a;
+	 a = 0;
+	 
+	 int b,c,d;
+	 b = c = d = 5;	//OK，赋值操作
+	
+	 short int sNum;
+	 short snum;
+	 long int lNum;
+	 long lnum;
+	
+（4）无符号/有符号
+	 unsigned	---> 无符号
+	 	非负数 ---> u%
+	 signed     ---> 有符号
+	
+	 unsigned int a;
+	 signed short b;
+
+（5）字符型：
+	  char  
+	  字符：由单引号扩起来的单个数字，字母或其他符号
+	  字符常量：'1', 'e', ',', '?', 'P', '\0', '0', '\'
+	  '\n': 回车换行
+	  '\t': 制表符
+	  '\r': 回车
+	  '\b': 回退一个字符
+	  
+	  char ch;
+	  
+	  char ch1 = '0';
+	  char ch2 = '\0';
+	  
+	  signed char   ----> -127(-(2^7-1))~128(2^7)
+	  unsigned char ----> 0~255(2^8)
+	  
+	  unsigned int  ----> 2^32
+	  
+	  字节：Byte
+	  位：bit
+	  1 Byte = 8 Bit
+	  
+	  占位符 --- %c
+	  ASCII码表
+	  
+（6）各数据类型的字节数
+	 sizeof --- 关键字，不是函数
+	 sizeof(int);	
+	//64 Bit OS
+	sizeof(char)   = 1
+	sizeof(short)  = 2
+	sizeof(int)    = 4
+	sizeof(long)   = 8 (32 Bit OS: 4)
+	sizeof(float)  = 4
+	sizeof(double) = 8
+	
+	sizeof(ch)   = 1
+	sizeof(sInt) = 2
+	sizeof(iInt) = 4
+	sizeof(lInt) = 8
+	sizeof(fNum) = 4
+	sizeof(dNum) = 8
+	
+	
+	 float 
+	 double	
+
+5. 代码编译错误解决
+（1）编译过程中出现的英文单词，要积累
+	  警告，错误信息中常见单词
+（2）man 手册
+（3）阅读英文文档 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

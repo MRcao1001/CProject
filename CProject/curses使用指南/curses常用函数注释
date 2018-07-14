@@ -1,0 +1,189 @@
+curses(诅咒)的名字起源于"cursor optimization"，即光标优化
+Ubuntu下安装方法：
+sudo apt-get install libncurses5-dev
+(如果发现找不到这个包，使用命令 sudo apt-get update 更新下包源）
+
+包含头文件：curses.h
+编译时应加上链接语句-lcurses，如：gcc temp.c -o temp -lcurses
+
+
+initscr():初始化curses库 (使用这个函数来开启curses模式）(screen屏幕)
+endwin():关闭curses模式  (最后调用函数）
+move(y,x):将游标移动至x,y的位置
+
+move(LINES/2, COLS/2); /*移动光标到屏幕中心,LINES是屏幕行数,COLS是屏幕列数,两个宏*/
+
+
+格式化输入输出函数('w'是window的缩写,窗口的意思)
+printf()->printw() 格式化输出函数,两个函数完全等价
+scanf()->scanw()   格式化输入函数
+
+下面会多次出现函数前面加前缀"w","mv","mvw"
+不加后缀就是在整块屏幕上操作该函数
+加"w"是指在指定窗口中操作该函数,需要传入窗口的名称
+加"mv"是指在屏幕的指定坐标处操作该函数,需要传入坐标位置即y轴,x轴坐标,屏幕左上角为坐标原点.
+加"mvw"是指在指定窗口的指定坐标处操作该函数,需要传入窗口名,坐标位置三个参数
+
+
+输出字符类函数,addch()类函数
+int addch(const int ch); 			//输出字符
+int waddch(WINDOW *win,const int ch);//在指定窗口中输出字符
+int mvaddch(int y,int x,const int ch);//在指定坐标处输出字符
+int mvwaddch(WINDOW *win,int y,int x,chosnt int ch);//在指定窗口的指定坐标输出字符
+int echochar(const int ch);			//回显输出字符
+int wechochar(WINDOW *win,const int ch);//在指定窗口中输出字符
+
+注意:
+当输入tab键时，间隔间的字符将被删除
+当输入回车符时，将光标到窗口右边界的所有字符删除，然后转到下一行。
+在没有指定y,x的情况下， 将字符输出到之前字符的后面。即接着前面的字符输出。不会换行
+
+
+输出字符串类函数
+int addstr(const char *str);//输出字符串
+int addnstr(const char *str,int n);//输出含有n个字符的字符串
+int waddstr(WINDOW * win,const char *str);//在指定窗口中输出字符串
+int waddnstr(WINDOW * win,const char *str,int n);//在指定窗口中,输出含有n个字符的字符串
+int mvaddstr(int y,int x,const char * str);//在指定坐标处输出字符串
+int mvaddnstr(int y,int x ,const char *str,int n);//在指定坐标处,输出含有n个字符的字符串
+int mvwaddstr(WINDOW *str,int y,int x,const char *str);//在指定窗口中,指定坐标处,输出字符串
+int mvwaddnstr(WINDOW *str, int y,int x ,cosnt char * str,int n);//在指定窗口中,指定坐标处,输出含有n个字符的字符串
+
+如果n=-1,则整个字符串都将被输出
+这些函数没有自动换行的功能，所以，如果想要在下一行输出，要先addch('\n');（或其他有此功能的函数，或者是，在上一个输出的字符后面添加一个换行符）。
+
+addchstr类“输出”函数
+int addchstr(const chtype *str);
+int addchnstr(const chtype *str,int n);
+int waddchstr(WINDOW *win,const chtype*str);
+int waddchnstr(WINDOW *win ,const chtype*str,int n);
+int mvaddchstr(int y,int x,const  chtype*str);
+int mvaddchnstr(int y,int x,const chtype *str,int n);
+int mvwaddchstr(WINDOW *win,int y,int x,const chtype *str);
+int mvwaddchnstr(WINDOW *win,int y,int x ,const chtype *str,int n);
+
+若输出的长度超过了窗口的宽度,用这些函数,注意：他们不会自动换行，而是继续往“右”输出，实际上也就是被截断了。这几个函数和上面的addstr类函数类似，只是它们不直接往实际的物理窗口上输出，而是先输出到虚拟窗口，光标的位置保持不变。
+注：chtype 为unsigned long 类型，在ncurses.h中定义的宏定义。
+
+
+printw类输出函数
+int printw(const char *fmt,...);  类似于printf();
+int wprintw(WINDOW *win,const char *fmt,...);//在指定窗口格式化输出
+int mvprintw(int y,int x,const char *fmt,...);//在指定坐标格式化输出
+int mvwprintw(WINDOW *win,int y,int x,const char *fmt,...);//在指定窗口,指定坐标格式化输出
+int vwprintw(WINDOW *win,const char *fmt,va_list varglist);
+
+
+字符输入函数,getch()类函数
+//输入默认可见（若调用noecho函数，则输入不可见）成功，返回输入的字符
+int getch(void);   //字符输入函数等价于getchar()
+int wgetch(WINDOW *win);//在窗口中使用的字符输入函数
+int mvgetch(int y,int x);//在指定坐标处使用的字符输入函数
+int mvwgetch(WINDOW *win,int y,int x);//在指定窗口指定坐标出使用的字符输入函数
+int ungetch(void);
+int ungetch(void);
+int has_key(int ch);
+  getch系列函数从窗口中“等待”输入一个字符。在非阻塞模式下，若无字符输入，那么就返回ERR。在延时模式下，若在规定的时间内无输入，那么也会返回ERR。
+getch()系列函数在curses中的功能很强大，若keypad是TRUE的话，它可以接收功能键（F1、F2等等）。
+
+
+格式化输入函数,scanw系列输入函数
+int scanw(char *fmt,...);//格式化输入,类似于scanf()
+int wscanw(WINDOW *win,char *fmt,...);//指定窗口下使用的格式化输入
+int mvscanw(int y,int x,char *fmt);//指定坐标处的格式化输入
+int mvwscanw(WINDOW *win,int y,int x,char *fmt,..);//指定窗口,指定坐标下的格式化输入
+****int vwscanw(WINDOW *win ,char *fmt,va_list varglist);
+和scanf函数类似
+
+
+字符串输出函数,getstr系列输入函数
+int getstr(char *str);//字符串输入函数,类似于gets()
+int getnstr(char *str,int n);//输入长度为n的字符串
+int wgetstr(WINDOW *win,char *str);//在指定窗口输入字符串
+int wgetnstr(WINDOW *win, char *str,int n);//在指定窗口输入长度为n的字符串
+int mvgetstr(int y,int x,char *str);//在指定坐标输入字符串
+int mvwgetstr(WINDOW *win,int y,int x,char *str);//在指定窗口,指定坐标,输入长度为n的字符串
+int mvgetnstr(int y,int x,char *str,int n);//在指定坐标输入长度为n的字符串
+int mvwgetnstr(WINDOW *win,int y,int x,char *str,int n);//在指定窗口的指定坐标输入长度为n的字符串.
+这类函数主要处理字符串的输入。
+
+
+设置/移动光标类、画线类、画方框类
+int move(int y,int x);//移动光标到（x,y）
+int wmove(WINDOW *win,int y,int x);//指定窗口下,移动光标到（x,y）
+// 注意:窗口左上角坐标为（0,0）
+int curs_set(int visibility);  //设置光标模式。0不可见；1普通模式；2完全可见.该函数调用成功，将返回光标先前的模式
+	int border(chtype ls,chtype rs,chtype ts,chtype bs,chtype tl,chtype tr,chtype bl,chtype br); 
+	int wborder()
+	int box(1,2,3)//边框划线,三个参数1:表示窗口名,2:表示纵向线的样式,3:表示横向线的样式
+	int hline(1,2) //画横线,两个参数1:线条样式,2:线的长度
+	int whline(1,2,3)//指定窗口下划线,三个参数1:窗口名称,2:线条样式,3:线的长度
+	int vline(1,2)   //画竖线,两个参数1:线条样式,2:线的长度
+	int wvline(1,2,3)//指定窗口下画竖线,三个参数
+	int mvhline(1,2,3,4)//指定坐标处开始画横线,四个参数,1,2表示坐标y,x轴,3:样式,4:长度
+	int mvwhline(1,2,3,4,5)//指定窗口指定坐标处开始划横线,五个参数1:窗口名 2,3表示坐标y,x轴,4:样式  5:长度
+	int mvvline()//类似于mvhline,这里画的是竖线
+	int mvwvline()//类似于mvvline,这里画的是竖线
+注意：在划线时光标位置不移动
+
+
+窗口机制
+创建窗口类函数
+WINDOW *newwin(int nlines,int ncols,int begin_y,int begin_x);//新建窗口函数,(行数,列数,起始y坐标,起始x坐标)
+int delwin(WINDOW *win);//删除窗口函数
+int mvwin(WINDOW *win);
+WINDOW *subwin(window *orig,int lines, int ncols,int begin_y,int begin_x);//创建并返回一个指向新窗口的指针，五个参数1:窗口名称,2:行数,3:列数,4:起始纵坐标,5:起始横坐标
+WINDOW *derwin(WINDOW *orig,int nlines,int ncols,int begin_y,int begin_x);
+int mvderwin(WINDOW *win,int part_y,int part_x);
+WINDOW *dupwin(WINDOW *win);
+
+newwin和subwin的区别:newwin是新建一个窗口,和以前窗口不相干,subwin是新建一个子窗口
+
+颜色设置
+int start_color(void); //开启颜色设置
+int init_pair(short pair,short r,short g);//初始化颜色对，（前景色、背景色）
+//例如:init_pair(WHI_BLU,COLOR_WHITE,COLOR_BLUE);设置WHI_BLU为,蓝底白字
+//WHI_BLU	需要提前宏定义
+
+//定义颜色对一般采用宏定义的方式
+#define WHI_BLU 1	
+#define BLU_WHI 2	
+#define RED_WHI 3	
+#define BLK_BLU 4	
+#define YEL_BLU 5	
+//设置颜色对,即前景色和背景色
+init_pair(WHI_BLU,COLOR_WHITE,COLOR_BLUE);//蓝底白字
+init_pair(BLU_WHI,COLOR_BLUE,COLOR_WHITE);//白底蓝字
+init_pair(RED_WHI,COLOR_RED,COLOR_WHITE);//白底红字
+init_pair(BLK_BLU,COLOR_BLACK,COLOR_BLUE);//蓝底黑字
+init_pair(YEL_BLU,COLOR_YELLOW,COLOR_BLUE);//蓝底黄字
+
+//使用颜色时
+wbkgd(menubar,COLOR_PAIR(BLU_WHI));//设置窗口menubar为白底蓝字
+默认可用的颜色
+#define COLOR_BLACK          0	//黑色
+#define COLOR_RED            1	//红色
+#define COLOR_GREEN          2	//绿色
+#define COLOR_YELLOW         3	//黄色
+#define COLOR_BLUE           4	//蓝色
+#define COLOR_MAGENTA        5	//品红
+#define COLOR_CYAN           6	//青色,蓝绿色
+#define COLOR_WHITE          7	//白色
+
+
+背景色的设置
+int bkgdset(chtype ch);  //从当前光标起，到字符不再输出的那一行有效
+int wbkgdset(WINDOW *win,chtype ch);//在指定窗口内,设置背景色,从当前光标开始
+int bkgd(chtype ch);//设置全局背景色,不管以前显示的字符怎么样，它们都被设置为新的背景色
+int wbkgd(WINDOW *win,chtype ch);//设置指定窗口的全局背景色
+chtype getbkgd(WINDOW *win);
+
+
+
+
+
+
+
+
+
+

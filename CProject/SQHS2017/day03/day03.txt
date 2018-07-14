@@ -1,0 +1,222 @@
+		day03 Note
+IP: 192.168.155.2	
+		
+复习：
+1. 实型数据类型
+	float: 浮点型数据  
+	double:双精度
+	
+	%f  %g  %e  %lf
+	
+	mEn  men  
+		n 只能为整数
+
+2. 其他数据类型
+	
+3. 标识符
+	
+4. 变量/函数命名规范
+	采用驼峰命名法
+
+5. printf/scanf & putchar/getchar
+	占位符：
+		%d  %u  %c  %ld %f %lf  
+		%o  %x  %X  %p  %s %g
+		%e
+
+	输出宽度：
+		printf("%5d\n", a);
+		
+	不定宽度输出：
+		//输出宽度为 x
+		printf("%*d\n", x, a);	
+		
+	按精确输出：	
+		右对齐：%m.nf
+		左对齐：%-m.nf
+
+	scanf:
+		"" 中不能用 '\n'
+		取地址：&variable
+	
+		不能输入具体精度
+		
+	getchar:
+	putchar:
+
+	形式一：
+		scanf("%d",&a);
+		ch = getchar();	//ch = '\n'
+	形式二：
+		scanf("%d",&a);
+		getchar();		//吸收回车符 '\n'
+		ch = getchar();	//ch 为用户的输入字符
+
+	转义字符：
+		\t   \b   \r    \n  
+    
+    printf("hello, china!\n");
+    printf("hel\tlo, china!\n");
+    printf("hello\b, china!\n");
+    printf("hello, ch\rina!\n");
+	结果为：
+		hello, china!
+		hel	lo, china!
+		hell, china!
+		ina!o, ch		
+
+3. 类型转化
+	显示转化：强制类型转化
+	隐式转化
+
+================================================
+1. 运算符的分类
+	算术运算符
+	关系运算符
+	赋值运算符
+	逻辑运算符
+	位运算符
+	条件运算符
+	逗号运算符
+	sizeof
+	
+2. 算术运算符
+	//双目运算符
+	加：+  减：-  乘：*  
+	除：/   
+		分母不为 0
+		
+	取余: %，求模运算
+		m%n  ---> m 对 n 取余
+		只有整数可以进行取余运算！！！
+
+	//单目运算符
+		int iNum = 4;
+	自增运算符：++
+		前++：
+				int a = ++iNum;
+			等价于：
+				iNum = iNum + 1;
+				a = iNum;
+		
+			先自增，后赋值
+		
+		后++：
+				int b = iNum++;
+			等价于：
+				b = iNum;
+				iNumm = iNum + 1;
+		
+			先赋值，后自增
+		
+	自减运算符：--
+		前--：
+				int a = --iNum;
+			等价于：
+				iNum = iNum - 1;
+				a = iNum;
+		
+			先自减，后赋值
+		
+		后--：
+				int b = iNum--;
+			等价于：
+				b = iNum;
+				iNumm = iNum - 1;
+		
+			先赋值，后自减
+
+		int a = 4;
+		int b = 5;
+		//sum = a++ + b;
+		int sum = a+++b;
+		printf("sum = %d\n",sum);
+		printf("a = %d\n",a);
+		printf("b = %d\n",b);
+		
+		
+3. 关系运算符
+	比较两个操作数或两个表达式的关系
+	操作数可以是：变量，常量，表达式
+		小于：<  
+		大于：>
+		大于或者等于：>=   
+				a >= b
+			等价于
+				a > b 或者 a = b
+			
+ 		小于或者等于：<= 
+		相等：==
+			
+			66 == 77;
+			a == 66;		//a=66;
+			//一般采用以下写法
+			66 == a;		//66=a;	//Error
+			a == b;		//a=b;
+		
+		不等：!=
+	
+	关系表达式成立则结果为真(1)
+	否则结果为假(0)
+	
+	非零即为真
+	
+4. sizeof --- 计算变量或类型的字节数
+	int a = 4;
+	
+	sizeof(int);	//OK
+	sizeof int;		//Error
+	sizeof(a);		//OK
+	sizeof a;		//OK
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		

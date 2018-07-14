@@ -1,0 +1,218 @@
+			day21  Note
+IP: 192.168.1.103
+
+复习：
+1. fread()/fwrite()
+	块读写
+	读和写的格式一定要严格一致
+	
+	对于不熟悉的函数，建议使用 man 手册
+	
+	
+（1）ftell();
+	 返回当前的文件指针位置
+	 
+	 long ftell(FILE *stream);
+
+（2）fseek();
+	 设置文件指针位置
+	 
+	int fseek(FILE *stream,long offset,int whence);
+	
+	stream：文件流
+	
+	offset：文件指针的偏移量
+	
+	whence 的取值：
+	SEEK_SET：文件首，一般 offset > 0
+	SEEK_CUR：文件指针的当前位置，>0 或者 <0
+    SEEK_END：文件末,一般 offset < 0
+
+2. 预处理
+	宏定义
+	
+	#if 0
+	#endif
+	
+	#ifndef
+	#endif
+
+3. gcc 的四步编译过程
+（1）预处理
+	 gcc -E file.c -o file.i
+（2）编译
+	 gcc -S file.i -o file.S
+（3）生成二进制文件
+	 gcc -c file.S -o file.o
+（4）链接
+	 gcc -o file file.o
+	 或者
+	 gcc file.o -o file 
+
+	gcc file.c -o file
+
+==================================================
+1. 多文件
+（1）多文件的使用
+
+（2）多文件的编译
+
+	  gcc -c file1.c -o file1.o 
+	  gcc -c file2.c -o file2.o
+	  gcc -c file3.c -o file3.o
+
+	  gcc file1.o file2.o file3.o -o file
+	
+
+	最终生成的可执行文件与哪些文件相关，则编译
+	哪些文件生成该执行文件，若不相关则不编译
+
+2. makefile 的简答语法以及使用规则
+（1）makefile 文件的名称
+
+	 Makefile 或者 makefile
+	 
+	 make -f 文件名
+	 maek --file 文件名
+
+（2）最简单的 Makefile
+	 all:
+	 	gcc main.c test.c -o main -Wall
+
+（3）其他形式的makefile
+	 $^:目标依赖的第一个文件
+	 $<:目标依赖的所有文件
+	 	$<  $^ 可以混用
+	 		
+	 $@:目标文件
+
+	 立即变量：
+	 	OBJS:=value
+	 	OBJS?=value
+	 延时变量
+	 	OBJS = value
+	 	
+	 基本语法规则：
+	 	目标：依赖文件
+			命令 	//开头是一个 tab 键
+
+	 伪目标：
+	 	命令
+
+	makefile的注释：
+		以 # 开头的为 makefile 的注释
+
+
+3. 练习 --- ATM 
+（1）分析基本功能：
+	atm：
+		链表的
+				查（查看自己的信息---密码除外）
+			 	改（修改自己的信息---密码）
+			    
+			    余额修改---后台完成
+			    
+	admin:
+		链表的	
+				增：添加用户信息（开户）
+				删：删除无用或注销用户
+				改：修改用户信息：密码，手机号
+				查：查看指定用户的信息（除密码）
+	   显示所有用户：
+	   
+	用户信息结构
+			姓名
+			卡号
+			密码
+			性别
+			手机号
+			身份证号
+			余额
+			银行卡的等级（可选）	
+
+（2）设计（构思）---代码框架
+	 a. 文件分类
+	 	atm.c/atm.h
+	 		atm 端的基本实现
+	 		
+	 	list.c/list.h
+	 		链表的相关操作
+	 		
+	 	admin.c/admin.h
+	 		柜台的基本功能实现
+	 		
+	 	interfaceUI.c/interfaceUI.h
+	 		界面绘制
+	 	
+
+	 b. 
+	 
+	 c. 
+	 
+	 
+	 d. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

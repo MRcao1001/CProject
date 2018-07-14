@@ -1,0 +1,508 @@
+			day01 Note
+IP : 192.168.155.2
+复习：
+1. 装机问题
+
+2. Linux 的目录结构
+	/  :根目录
+	~ :家目录
+	.  :当前目录
+	.. : 上层目录
+	/home/用户名/ : 宿主目录
+
+3. 基本常用命令
+（1）ls
+	 ls -l 
+	 ls -a		ls -all
+	 ls -d
+	 ls -ld
+	 ll
+	 la	
+	以上命令之后可以加目录名称，也可加文件名称
+	
+（2）cd 
+	 cd ~
+	 cd -
+	 cd 路径/
+	 注： 
+	 	路径可以时绝对路径或相对路径
+
+（3）pwd 
+
+（4）touch & rm
+	 touch fileName
+	 	fileName 不存在，则创建，若存在，则更新时间戳
+	 touch 201712{01..31}.txt 
+	 
+	 rm 
+		 -f:强制删除
+		 -i:交互式删除
+		 -r:删除目录 
+	 可使用通配符：* , ?
+	 
+	 sudo rm -fr * 
+	 
+（5）mkdir & rmdir
+	 mkdir 目录名称
+	 mkdir -p a/b/c/d/ 	//递归创建多级空目录
+
+	 rmdir 目录名称		//必须是空目录
+	 rmdir -p 路径/		//递归删除多级空目录
+
+（6）cp & mv
+	 文件复制：
+	 	源文件 ---> 目的文件
+	 	目的文件存在，则覆盖
+	 	目的文件不存在，则复制并重命名
+	 	源文件 ---> 目录
+	 	
+	 目录复制：-r
+	 	源目录 ---> 目的目录
+		目的目录不存在：复制源目录并更改名称
+		目的目录存在：源目录作为目的目录的子目录
+				
+	 -i：交互式复制
+
+	mv 对目录进行操作时，不需要加 -r 参数
+
+（7）cat & tac
+	 cat filename
+	 cat -n filename
+	 cat -b filename
+	 tac filename		//逆序输出文件
+
+（8）head & tail
+	 head/tail filename 	//默认显示10行
+	 head/tail -n filename	//显示文件的 n 行
+
+（9）more & less
+	 分屏查看
+	 more filename
+	 	空格，回车
+	 less filename
+	 	空格，回车，上下键，pgdn/pgup,
+
+	 退出查看： q
+
+（10）man & help & info
+	   man 手册的使用
+
+（11）sudo & su
+	   权限问题：
+		sudo !! 	//提权后，重复执行上一条指令
+		
+	   切换到超级用户：
+	   		su root 
+	   		su
+	   		su - root
+			su -
+
+	   退出超级用户：
+	   	    exit 
+	   	    ctrl + d
+	   	    su - 用户名
+	   	    重启终端
+
+	   命令提示符：
+	   	 root@lee:~#		//超级用户
+	   	 loong@lee:~$		//普通用户
+
+（12）清屏
+	  clear
+	  ctrl + l
+
+（13）终端
+	打开：
+		ctrl + atl + t
+		ctrl +shift + t
+
+	关闭：
+		点击 X 
+		exit
+		ctrl + d
+		ctrl + shift + w	
+
+	终端字体：
+		ctrl shift ++
+		ctrl -
+		ctrl 0
+
+	全屏：
+		F11 (Fn + F11)
+	最大化：
+		ctrl + Windows + 上	
+
+=========================================
+1. find ：查找
+	find 路径 类型  查找内容(文件或目录)
+
+	find 路径 -type d	//在指定路径下，查找目录文件
+	find /home/loong/ -type d
+	
+	//在指定路径下，查找 filename 文件
+	find 路径 -name filename 
+	find /home/loong/ -name day01.txt
+	
+	//在指定路径下，按文件的拥有者查找
+	find 路径 -user 用户名
+	sudo find /dev/ -user root
+	
+2. 文件表示
+	-:普通文件
+	d:目录文件
+	s:socket文件
+	l:链接文件
+	p:管道文件
+	c:字符文件
+	b:块设备文件
+
+3. ps, pstree, kill
+	ps -aux : 查看当前的所有进程
+	pstree ：以进程树的形式列出所有进程
+	kill -9 PID(进程号)
+
+4. 网络相关命令
+	ping IP 	//检查网络的联通状况
+	ficonfig 	//查看当前IP，修改IP
+	sudo ifconfig enp3s0 192.168.0.1
+
+5. apt-get (16.04: apt)
+（1）软件源更新
+	  sudo apt-get update 
+（2）系统升级 / 升级软件
+	  sudo apt-get upgrade
+	  sudo apt-get upgrade 软件名称
+（3）在线安装
+	  sudo apt-get install softWareName
+	  
+	  sudo apt install cmatrix
+	  sudo apt install sl
+	  sudo apt install vim
+（4）sudo apt-get clean
+	 sudo apt-get autoclean
+	 sudo apt-get remove
+	 sudo apt-get autoremove
+
+（5）软件的卸载
+	 //卸载软件，但保留配置文件
+	 sudo apt-get remove softWare
+	 //卸载软件，并清除配置文件
+	 sudo apt-get --purge remove softWare
+
+（6）修正依赖关系
+	 sudo apt-get install -f
+	 sudo apt-get -f install 
+
+6. dpkg : 软件安装和卸载
+（1）deb 格式的安装包安装
+	 sudo dpkg -i packageName.deb
+（2）移除安装包
+	 sudo dpkg -r packageName
+（3）彻底移除安装包
+	 sudo dpkg -P packageName
+（4）列出 deb 安装包的内容
+	 sudo dpkg -c packageName.deb
+	 
+7. Ubuntu 下的软件安装 & 卸载
+	安装：
+		(1) Ubuntu 软件中心，搜索安装
+		(2) 在线安装
+			sudo apt-get update
+			sudo apt-get install softWare
+		(3) deb 格式的安装包
+			a. 双击，使用 Ubuntu 软件中心安装
+			b. 使用 dpkg 安装
+				sudo dpkg -i packageName.deb
+		(4) 压缩包软件：.tar.gz   .tar.zx  .tar
+		    直接解压
+		    配置
+		    make 
+		    make install 
+		    
+		修正依赖关系：
+			sudo apt-get -f install
+			sudo apt-get install -f
+	
+	卸载：
+		(1) Ubuntu 软件中心卸载
+			
+		(2) //卸载时，保留配置文件
+			sudo apt-get remove software
+			//完全卸载
+			sudo apt-get --purge remove software
+			
+		(3) 	dpkg 卸载相应软件：
+			sudo dpkg -r package
+		    sudo dpkg -P package
+		    
+		(4) 直接删除相应的软件安装目录
+
+8. 磁盘相关命令
+	free：查看内存使用情况
+	df：查看磁盘使用情况
+	du：查看文件所占磁盘大小
+		du -h day02.txt
+	fdisk：查看磁盘分区情况
+	
+	
+9. 磁盘挂载 & 卸载
+	mount  被挂载的盘符 挂载点 
+		sudo mount /dev/sda5 windows/
+	umount 挂载点
+		sudo umount windows/
+
+	U 盘默认所在路径：
+		/media/用户名/disk/
+
+10. 文件权限的更改：chmod
+（1）查看文件权限：
+	  ls -l fileName
+-rwxrwxr-x 1 loong loong 8944 12月  3 17:13 pyramid.c	  
+	  
+	第0位：文件类型
+		管道文件，普通文件，目录文件 ...
+	第1,2,3位：文件拥有者的权限
+	第4,5,6位：同属组用户的权限
+	第7,8,9位：其他用户的权限
+	
+	- rwx rwx rwx
+	r:可读
+	w:可写
+	x:可执行
+	-：无对应权限
+
+（2）字符加权
+	 u:文件拥有者
+	 g:同属组用户
+	 o:其他用户
+	 a:所有用户
+	 
+	 chmod u+x file.c
+	 
+	 chmod u+x,g-w,o-r fileName
+	 chmod a+w filename
+	 chmod -w filename
+	 
+（3）八进制加权
+	
+	- -wx r-x ---
+	
+	000   	0
+	001		1
+	010		2
+	011		3
+	100		4
+	101		5
+	110		6
+	111		7
+
+	 chmod 777 fileName
+	 chmod 644 fileName
+	 
+11. 其他小命令
+	cal 查看日期
+	cal 	默认当前月的月份
+	cal -m 月份
+	cal -y 年份	 
+	 
+	uname -a :查看操作系统的类型
+	 
+12. 打包 & 压缩	 
+	tar 
+	zip
+	gzip
+（1）参数
+	 z:zip/unzip 进行压缩/解压缩
+	 j:gzip/ungzip 进行压缩/解压缩
+	 x:解包
+	 c:打包
+	 v:列出详细过程
+	 f:对普通文件操作
+	 	 
+	 打包压缩：
+	 	tar zcvf file.tar.gz 待压缩文件列表
+	 		-zcvf
+	 	tar jcvf file.tar.gz 待压缩文件列表
+	 		-jcvf
+	 
+	 解包解压缩
+	 	tar zxvf file.tar.gz
+	 	tar jxvf file.tar.gz
+	 
+	 打包：
+	 	tar cvf file.tar 打包文件列表
+	 解包：
+	 	tar xvf file.tar	
+
+	解压到指定路径：
+		tar zxvf file.tar.gz -C 路径/
+
+13. vim 的安装，配置和使用
+（1）安装
+	  sudo apt-get install vim
+	 
+（2）配置
+	 一般配置文件为：~/.vimrc
+	 vim .vimrc
+	 set number	#设置行号
+	 
+	 关于 vim 的配置，自行网上解决
+	 
+（3）使用
+ 	  visual interface --- 虚拟界面
+	  vim  ---  vi
+
+（4）保存和退出
+	 保存：
+	 	:w		//保存当前文件
+	 	:wa		//保存全部文件
+		:wq		//保存退出
+		:w!		//强制保存
+		:wq!
+	退出：
+		:q
+		:q!
+		:qa
+
+（5）编辑文件
+	命令模式：按 Esc 键
+		a. 删除：
+			dd		//删除一行
+			ndd 	//删除 n 行 
+			
+		b. 撤销 & 重复
+			u		//撤销上一步操作
+			.		//重复执行上一次操作
+			
+		c. 复制
+			yy		//默认复制一行
+			nyy 	//复制 n 行
+			
+		d. 粘贴
+			p		//粘贴到当前行的下一行
+			P		//粘贴到当前行的上一行	
+			
+		e. 其他方法删除
+			x:删除光标所在字符
+			nx:删除光标及其后 n 个字符
+			
+			dw: 删除一个字
+			d$:光标所在位置删到行尾
+			d0: 光标所在位置删到行首
+		
+		f. 替换
+			r 将光标所在位置的字符替换为输入的字符
+			nr 
+				
+		g. 跳转
+			G：跳转到文末
+			gg: 跳转到文首
+			:行号  跳转到指定行
+			
+		h. 打开多个文件
+			vim file.c file1.c file2.c
+				:n/:N 切换到下一个/上一个文件
+			//横屏分割，打开多个文件
+			vim -o file.c file2.c file1.c	
+			//竖屏分割，打开多个文件
+			vim -O file.c file1.c file2.c
+			
+			:vs fileName
+			:sp finename
+		
+		i. vim -x file.txt
+		
+		j. 查找
+			/: 正向查找
+				/string
+					n/N 查找下一个/上一个
+			?: 反向查找
+				?string
+					n/N 查找下一个/上一个
+						
+	末行模式：先按Esc 然后键入冒号，即可进入
+	输入模式：
+				a:光标后插入文本
+				i:光标前插入文本
+				I:行首插入文本
+				o:当前行的下一行，开始插入文本
+				O:当前行的上一行，开始插入文本
+
+		
+		AI    大数据 + 云计算
+			python 
+			
+			数学  --->  程序员的数学
+			C 语言程序设计 第二版  ---> 丹尼斯*里奇
+			
+	猿圈网
+	牛客网
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
