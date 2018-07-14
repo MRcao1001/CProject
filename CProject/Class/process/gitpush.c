@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
 
 
             else if(pid3 == 0) {
-                system("git push -u orgin master");
+                system("git push orgin master");
             }
             else{
                 perror("fork");
