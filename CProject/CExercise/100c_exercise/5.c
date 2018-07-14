@@ -3,4 +3,35 @@
       1.程序分析：我们想办法把最小的数放到x上，先将x与y进行比较，如果x>y则将x与y的值进行交换， 
       　　　　　　然后再用x与z进行比较，如果x>z则将x与z的值进行交换，这样能使x最小。 
       2.程序源代码：*/
-      
+#include <stdio.h>
+
+int main(int argc, char const *argv[])
+{
+      int i = 0;
+      int arr[3];
+      while (i <= 2)
+      {
+            scanf("%d", &arr[i]);
+            i++;
+      }
+      i = 0;
+      for (int i = 0; i < 2; i++)
+      {
+            for (int j = 0; j < 2 - i; j++)
+            {
+                  if (arr[j] > arr[j + 1])
+                  {
+                        int temp = arr[j + 1];
+                        arr[j + 1] = arr[j];
+                        arr[j] = temp;
+                  }
+            }
+      }
+      while (i <= 2)
+      {
+            printf("%d\t", arr[i]);
+            i++;
+      }
+      printf("\n");
+      return 0;
+}
