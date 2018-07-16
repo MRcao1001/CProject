@@ -9,5 +9,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
-
+#include <dirent.h>
+#include <pwd.h>
 #endif

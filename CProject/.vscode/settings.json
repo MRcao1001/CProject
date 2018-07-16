@@ -6,7 +6,10 @@
         "cstdlib": "c",
         "errno.h": "c",
         "fcntl.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "unistd.h": "c",
+        "dirent.h": "c",
+        "types.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }
