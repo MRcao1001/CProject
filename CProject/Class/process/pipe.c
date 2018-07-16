@@ -31,6 +31,7 @@ int main(int argc, char const *argv[])
         else if (pid == 0)
         {
             char caMsg[64] = {'\0'};
+            system("gnome-terminal");
             while (1)
             {
                 memset(caMsg, 0, 64);
