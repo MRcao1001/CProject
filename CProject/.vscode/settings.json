@@ -9,7 +9,8 @@
         "type_traits": "c",
         "unistd.h": "c",
         "dirent.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "public.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }
