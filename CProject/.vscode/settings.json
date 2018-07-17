@@ -10,7 +10,8 @@
         "unistd.h": "c",
         "dirent.h": "c",
         "types.h": "c",
-        "public.h": "c"
+        "public.h": "c",
+        "typeinfo": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

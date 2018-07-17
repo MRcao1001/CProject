@@ -78,7 +78,7 @@ int deleteUser(userNode *pHead, long cardID)
 
     while(NULL != pCur)
     {
-        if(cardID == pCur->data.cardID)
+        if(cardID ==pCur->data.cardID)
         {
             pPre->pNext = pCur->pNext;
             free(pCur);

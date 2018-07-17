@@ -28,15 +28,48 @@
     当没有回车时，数据存入缓冲区，当缓冲区没有满的时候，等待程序正常结束才输出，有回车是无论有没有满都会输出；
 2--进程通信
     方式及其原理：
-        a： 管道
+        a： 管道(pipe)
+            头文件：
+            #include <unistd.h>
             无名管道：只能用于亲缘关系的进程之间通信
             在内存中申请一个临时空间并对其封装，与进程相互独立；提供写入读取接口，一旦数据被读取就会清除管道内的数据
             实现：pipe.c
             通过管道实现子进程之间的通信
-            
+
             有名管道：可以在没有亲缘关系的进程之间通信,有名管道是一个文件，使用mkfifo创建管道文件
-        b：共享内存
+
+            
+        b：共享内存(shmget)
+            头文件:
+            #include <sys/ipc.h>
+            #include <sys/shm.h>
+            函数原型:
+            int shmget(key_t key,size_t,int shmflg)
+            查询系统共享内存 ipcs -m
+            ------------ 共享内存段 -------------- 
+            键          shmid     拥有者      权限        字节      连接数       状态      
+            0x00000000 2031616    mrcao      600        16777216   2          目标       
+            0x00000000 1277953    mrcao      600        524288     2          目标       
+            0x00000000 1703938    mrcao      600        8388608    2          目标       
+            0x00000000 1343491    mrcao      600        67108864   2          目标       
+            0x00000000 1736708    mrcao      600        393216     2          目标       
+            0x00000000 1769477    mrcao      600        12288      2          目标       
+            0x00000000 1835014    mrcao      700        16472      2          目标       
+            0x00000000 2752519    mrcao      600        524288     2          目标       
+            0x00000000 2490376    mrcao      700        163240     2          目标 
+
+            使用共享内存：
+            1:将共享内存关联到进程空间 shmat----share memory attach
+            void *shmat (int shmid, const void *shmaddr, int shmflg);
+            拷贝字符串：
+            1--strcpy((char *)dest, "stream");
+            2--memcpy((void *)dest,(void *)src,size_t);
+            3--sprintf(char *str, const char *format, ...)  \  sscanf(const char *str, const char *format, ...);
+            4--直接操作内存空间的值
+
         c：内存映射
+            将文件的一部分映射到内存中（通常用于操作设备文件，例如摄像头，录音器等） mmap----memory mmap
+            <sys/mman.h>
         d：信号
         e：信号量
         f：socket
