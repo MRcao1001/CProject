@@ -80,6 +80,48 @@
             atoi()将字符串转变成整数的函数
             SIGKILL信号，根据进程号结束进程
             alarm()信号,设定秒钟结束信号
+            signal()函数自定义信号函数
+                SIGKILL & SIGSTOP不允许通过signal()自定义
+            信号屏蔽:
+            在自定义信号函数内屏蔽信号
+            //创建信号集合
+            sigset_t set;
+            sigset_t old;//定义变量保留状态
+            sigemptyset (&set);
+            sigaddset(&set,SIGTSTP);
+            //屏蔽信号
+            sigprocmask(SIG_BLOCK,&set,old);
+            //处理完成之后解除屏蔽
+             (SIG_SETMASK,&set,old);
+            
+
+            sigaction{
+                void     (*sa_handler)(int);
+                void     (*sa_sigaction)(int, siginfo_t *, void *);
+                sigset_t   sa_mask;//在处理信号时防止其他信号的干扰
+                int        sa_flags;
+                void     (*sa_restorer)(void);   
+            }
+
+
+
+            例子：：
+            -------------------------------------------------------------------------------
+            -------------------------------------------------------------------------------
+            sigset_t set;
+            sigemptyset (&set);
+            sigaddset(&set,SIGALRM);//屏蔽alarm信号
+
+            sigset_t new;
+            sigemptyset(&new);
+            sigaddset(&new,SIGINT);
+
+            alarm(5);
+            sigsuspend(&new);
+            //用未阻塞的SIGINT信号和被阻塞的SIGALRM信号交换，SIGINT信号进入阻塞状态，SIGALRM信号恢复
+            //于此同事挂起程序
+            --------------------------------------------------------------------------------
+            -------------------------------------------------------------------------------
         e：信号量
         f：socket
         g：消息队列

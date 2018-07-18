@@ -12,7 +12,8 @@
         "types.h": "c",
         "public.h": "c",
         "typeinfo": "c",
-        "signal.h": "c"
+        "signal.h": "c",
+        "pthread.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

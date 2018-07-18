@@ -1,0 +1,19 @@
+什么是线程：线程是轻量级的进程
+线程属于创建它的进程，不和进程分离，
+创建线程的进程被称之为主线程
+所有线程并发运行
+
+头文件：#include <pthread.h>
+pthread_t thr;
+函数原型:
+int pthread_create(
+            pthread_t *thread,//线程的名字
+            const pthread_attr_t *attr,//线程的属性，优先级，分离线程、非分离；使用默认属性 ：NULL
+            void *(*start_routine) (void *),//执行线程的函数
+            void *arg);//线程函数的实参 ：(void *)666,
+编译时需要使用线程库， gcc x.c -o x -pthread
+
+线程锁：
+pthread_mutex_lock(&mutex);
+pthread_mutex_unlock(&mutex);
+
