@@ -11,7 +11,8 @@
         "dirent.h": "c",
         "types.h": "c",
         "public.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "signal.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

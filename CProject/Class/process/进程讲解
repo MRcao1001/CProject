@@ -70,7 +70,16 @@
         c：内存映射
             将文件的一部分映射到内存中（通常用于操作设备文件，例如摄像头，录音器等） mmap----memory mmap
             <sys/mman.h>
+            void *mmap( void *addr, 
+                        size_t length, 
+                        int prot(映射的空间的权限【MAP_SHARED】【MAP_PRIVATE】), 
+                        int flags,
+                        int fd, 
+                        off_t offset(从文件何处开始));
         d：信号
+            atoi()将字符串转变成整数的函数
+            SIGKILL信号，根据进程号结束进程
+            alarm()信号,设定秒钟结束信号
         e：信号量
         f：socket
         g：消息队列
