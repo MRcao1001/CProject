@@ -8,31 +8,33 @@ int main(int argc, char const *argv[])
 {
     //循环监听客户端的连接
     //循环检查是否有客户端连接到服务器
-    int sockfd = socket(AF_INET,SOCK_STREAM,0);
-    if(-1 == sockfd){
+    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (-1 == sockfd)
+    {
         perror("socket");
         exit(EXIT_FAILURE);
-
     }
     struct sockaddr_in servAddr;
     servAddr.sin_family = AF_INET;
     servAddr.sin_port = htons(8888);
-    servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    bzero(servAddr.sin_zero,8);
+    servAddr.sin_addr.s_addr = INADDR_ANY;
+    bzero(servAddr.sin_zero, 8);
+
     int ret = bind(
         sockfd,
-        (struct sockaddr*)&servAddr,
-        sizeof(servAddr)
-    );
-    if(-1 == ret){
+        (struct sockaddr *)&servAddr,
+        sizeof(servAddr));
+    if (-1 == ret)
+    {
         perror("bind");
         exit(EXIT_FAILURE);
     }
 
     //设置sockfd处理监听状态
     //并设置客户端连接队列的最大缓冲数
-    ret = listen(sockfd,20);
-    if(-1 == ret){
+    ret = listen(sockfd, 20);
+    if (-1 == ret)
+    {
         perror("listen");
         exit(EXIT_FAILURE);
     }
@@ -41,7 +43,8 @@ int main(int argc, char const *argv[])
     int clientSockfd = -1;
     int iLen = sizeof(clientAddr);
     char caMsg[64] = {'\0'};
-    while(1){
+    while (1)
+    {
         //接收通过sockfd监听到的客户端连接
         //并且自动将客户端的相应信息填入clientAddr
         //连接成功产生一个新的socket
@@ -50,25 +53,26 @@ int main(int argc, char const *argv[])
         //如果没有连接则阻塞等待
         clientSockfd = accept(
             sockfd,
-            (struct sockaddr*)&clientAddr,
+            (struct sockaddr *)&clientAddr,
             &iLen);
-        if(-1 == clientSockfd){
+        if (-1 == clientSockfd)
+        {
             perror("accept");
             break;
         }
         //inet_ntoa:将整数表示的IP转换为点分十进制字符串表示
         printf("client ip:%s,   port:%u,    connect success     new sockfd = %d\n",
-        inet_ntoa(clientAddr.sin_addr),
-        clientAddr.sin_port,
-        clientSockfd);
+               inet_ntoa(clientAddr.sin_addr),
+               clientAddr.sin_port,
+               clientSockfd);
 
         memset(caMsg, '\0', sizeof(caMsg));
         //接收客户端的数据
-        read(clientSockfd,caMsg,sizeof(caMsg));
-        strcat(caMsg,"!!! >_< !!!");
+        read(clientSockfd, caMsg, sizeof(caMsg));
+        printf("get: %s",caMsg);
+        strcat(caMsg, "!!! >_< !!!");
         //发送数据给客户端
-        write(clientSockfd,caMsg,strlen(caMsg));
-
+        write(clientSockfd, caMsg, strlen(caMsg));
     }
     return 0;
 }

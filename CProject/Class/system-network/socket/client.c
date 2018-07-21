@@ -20,8 +20,7 @@ int main(int argc, char const *argv[])
     servAddr.sin_addr.s_addr = inet_addr("193.112.137.246");
     bzero(servAddr.sin_zero,8);
 
-    int ret = -1;
-    ret = connect(
+    int ret = connect(
         sockfd,
         (struct sockaddr*)&servAddr,
         sizeof(servAddr)
@@ -31,5 +30,17 @@ int main(int argc, char const *argv[])
         exit(EXIT_FAILURE);
     }
     printf("connect successful\n");
+
+    char senddata[]={"hello server!\n"};
+    char recdata[100];
+    write(sockfd,senddata,sizeof(senddata));
+    int recvbitys = recv(sockfd,recdata,100,0);
+    if((recvbitys) == -1){
+        perror("rec error");
+        exit(EXIT_FAILURE);
+    }
+    recdata[recvbitys] = '\0';
+    printf("rec: %s",recdata);
+    close(sockfd);
     return 0;
 }
