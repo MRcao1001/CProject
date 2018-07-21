@@ -68,11 +68,15 @@ int main(int argc, char const *argv[])
 
         memset(caMsg, '\0', sizeof(caMsg));
         //接收客户端的数据
-        read(clientSockfd, caMsg, sizeof(caMsg));
-        printf("get: %s",caMsg);
-        strcat(caMsg, "!!! >_< !!!");
-        //发送数据给客户端
-        write(clientSockfd, caMsg, strlen(caMsg));
+        int i = 5;
+        while(i){
+            read(clientSockfd, caMsg, sizeof(caMsg));
+            printf("get: %s\n",caMsg);
+            strcat(caMsg, "收到信息!\n");
+            //发送数据给客户端
+            write(clientSockfd, caMsg, strlen(caMsg));
+            i--;
+        }
     }
     return 0;
 }
