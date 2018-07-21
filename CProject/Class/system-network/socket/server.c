@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
     struct sockaddr_in servAddr;
     servAddr.sin_family = AF_INET;
     servAddr.sin_port = htons(8888);
-    servAddr.sin_addr.s_addr = inet_addr("192.168.27.126");
+    servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
     bzero(servAddr.sin_zero,8);
     int ret = bind(
         sockfd,
