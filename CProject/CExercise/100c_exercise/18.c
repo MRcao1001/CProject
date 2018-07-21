@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
     scanf("%d",&num);
     for(int i=0;i<num;i++){
 
-            a=a*pow(10,i)+a;
+            a=a*pow(10,i)+a*((i>0)?1:0);
             printf("%d\n",a);
             result = a+result;
         

@@ -11,4 +11,8 @@
 #include <errno.h>
 #include <dirent.h>
 #include <pwd.h>
+#include <semaphore.h>
+#include <pthread.h>
+#include <time.h>
+#include <sys/sem.h>
 #endif

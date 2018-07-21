@@ -2,6 +2,7 @@
 线程属于创建它的进程，不和进程分离，
 创建线程的进程被称之为主线程
 所有线程并发运行
+进程有独立的存储空间，子线程共享主线程的存储空间
 
 头文件：#include <pthread.h>
 pthread_t thr;
@@ -14,6 +15,28 @@ int pthread_create(
 编译时需要使用线程库， gcc x.c -o x -pthread
 
 线程锁：
-pthread_mutex_lock(&mutex);
-pthread_mutex_unlock(&mutex);
+pthread_mutex_t mutex;
 
+pthread_mutex_lock(&mutex);//锁定
+pthread_mutex_unlock(&mutex);//解锁
+
+>>>不可重入函数：同一时间片只能有一个线程进行操作的函数
+
+以下是一个链表：
+[   ]--[    ]--[    ]--[    ]--[    ]
+  ^
+  | 
+head
+
+结束线程
+void *retval = NULL;
+ptherad_exit(*retval);
+
+void *retval = NULL;
+pthread_join(thr,&retval);
+//阻塞等待线程结束,获得线程的返回值
+//并对线程资源回收
+
+
+作业:读者写者问题
+    线程池问题
