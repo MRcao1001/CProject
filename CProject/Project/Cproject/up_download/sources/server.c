@@ -22,6 +22,7 @@ void *working(void *arg){
         ret = read(socket,fileArr,sizeof(fileArr));
         if(0 == ret){
             break;
+            printf("复制已经完成...\n",path);
         }
         else if (-1 == ret){
             if(EINTR == ret){
@@ -31,7 +32,7 @@ void *working(void *arg){
         }
         write(fd,fileArr,ret);
     }
-    printf("复制已经完成...\n",path);
+    
     close(fd);
     return NULL;
 }
