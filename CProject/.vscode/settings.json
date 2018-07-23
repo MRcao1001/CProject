@@ -14,7 +14,12 @@
         "typeinfo": "c",
         "signal.h": "c",
         "pthread.h": "c",
-        "socket.h": "c"
+        "socket.h": "c",
+        "inet.h": "c",
+        "in.h": "c",
+        "client.h": "c",
+        "stat.h": "c",
+        "server.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

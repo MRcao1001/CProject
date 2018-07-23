@@ -1,0 +1,2 @@
+客户端：gcc client.c link.c -o c
+服务器：gcc server.c link.c -o s -pthread
