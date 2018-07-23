@@ -47,7 +47,12 @@ void connectToclient(){
     servAddr.sin_family = AF_INET;
     servAddr.sin_port = htons(8888);
     bzero(servAddr.sin_zero,8);
-
+    int on=1;  
+    if((setsockopt(socketfd,SOL_SOCKET,SO_REUSEADDR,&on,sizeof(on)))<0)  
+    {  
+        perror("setsockopt failed");  
+        exit(EXIT_FAILURE);  
+    }
     ret = bind(socketfd, (struct sockaddr*)&servAddr,sizeof(servAddr));
     if(-1 == ret){
         perror("与客户端失联");
