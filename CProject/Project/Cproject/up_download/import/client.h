@@ -34,6 +34,7 @@ int fd;
 char *pFile;
 //定义文件寄存数组
 char fileArr[4096]= {'\0'};
+
 //函数声明
 //连接服务器函数
 void connectToServer();

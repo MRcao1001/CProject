@@ -80,7 +80,7 @@ void connectToclient(){
             perror("连接出现问题");
             break;
         }
-        printf("client ip:%s, port:%u connect ok  new sockfd = %d\n"
+        printf("IP地址为:%s的用户已经通过%u的端口连接到了本服务器\n他对应的sockfd为%d\n\n"
 			   , inet_ntoa(clientAddr.sin_addr)
 			   , clientAddr.sin_port
 			   , clientSocketfd);
