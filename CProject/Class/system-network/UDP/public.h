@@ -6,9 +6,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <arpa/inet.h>//htons
-#include <netinet/in.h>//inet_addr
+
+//每一次数据读写的最大字节数
+#define PER_MAX_IO_BYTES 4096
 
 #endif

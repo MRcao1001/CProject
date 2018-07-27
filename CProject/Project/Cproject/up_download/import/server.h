@@ -36,8 +36,6 @@ struct stat pathGet;
 int fd;
 //定义指针返回文件名中第一个为'/'的位置
 char *pFile;
-//定义文件寄存数组
-char fileArr[4096]= {'\0'};
 pthread_t thr;
 
 //函数声明
