@@ -19,7 +19,10 @@
         "in.h": "c",
         "client.h": "c",
         "stat.h": "c",
-        "server.h": "c"
+        "server.h": "c",
+        "functional": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

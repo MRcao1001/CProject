@@ -1,0 +1,4 @@
+create table vip( userName varchar(255), vip varchar(8), svip varchar(8));
+insert into vip value('admin','Y','Y');
+create table admin( pageName varchar(255), pageType varchar(8), pageDate varchar(32),likes int(10),diss int(10));
+create table adminMsg( sender varchar(255), mailTitle varchar(255), state varchar(8));
