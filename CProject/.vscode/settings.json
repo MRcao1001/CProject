@@ -22,7 +22,18 @@
         "server.h": "c",
         "functional": "cpp",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "string": "cpp",
+        "ratio": "cpp",
+        "array": "cpp",
+        "chrono": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "istream": "cpp",
+        "streambuf": "cpp",
+        "initializer_list": "cpp",
+        "string_view": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Enabled"
+    "C_Cpp.errorSquiggles": "Enabled",
+    "cSpell.language": "en"
 }

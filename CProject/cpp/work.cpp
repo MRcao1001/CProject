@@ -2,7 +2,7 @@
  * @Author: MRcao on ubuntu18.04
  * @Date: 2018-08-01 17:05:58
  * @LastEditors: MRcao
- * @LastEditTime: 2018-08-01 17:42:11
+ * @LastEditTime: 2018-08-02 14:13:00
  * @Description: 
  */
 #include <iostream>
@@ -36,9 +36,11 @@ main(int argc, char const *argv[])
     // int j;
     // int *f;
     // i = j = f = 0;
+    
     //part 3
     //unsigned int uni1 = 5, uni2=7;
     //cout << (uni1 & uni2) <<endl<< (uni1 | uni2) <<endl<< (uni1 && uni2)<<endl<<(uni1 || uni2);
+
     //part 4
         //where
     unsigned int ui;
