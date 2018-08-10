@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     myWidget w;
     appDisplay from;
-    from.move(150,50);
+    from.move(300,100);
     from.show();
 //    w.move(760,180);
 //    w.show();

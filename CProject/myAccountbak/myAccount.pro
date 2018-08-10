@@ -46,3 +46,6 @@ RESOURCES += \
 
 DISTFILES += \
     Img/User Settings.png
+
+#QT       += webkitwidgets
+#QT       += network

@@ -56,5 +56,40 @@
         <file>Img/upload.png</file>
         <file>Img/save.png</file>
         <file>Img/send.png</file>
+        <file>Img/button_h.png</file>
+        <file>Img/button_n.png</file>
+        <file>Img/button_p.png</file>
+        <file>Img/menuBg.png</file>
+        <file>Img/blog.png</file>
+        <file>Img/blog_min.png</file>
+        <file>Img/writepage_btn.png</file>
+        <file>Img/sendmail_btn.png</file>
+        <file>Img/overview_btn.png</file>
+        <file>Img/mailbox_btn.png</file>
+        <file>Img/info_btn.png</file>
+        <file>Img/firend_btn.png</file>
+        <file>Img/chatroom_btn.png</file>
+        <file>Img/writepage_p_btn.png</file>
+        <file>Img/sendmail_p_btn.png</file>
+        <file>Img/overview_p_btn.png</file>
+        <file>Img/mailbox_p_btn.png</file>
+        <file>Img/info_p_btn.png</file>
+        <file>Img/firend_p_btn.png</file>
+        <file>Img/chatroom_p_btn.png</file>
+        <file>Img/rf.png</file>
+        <file>Img/exit.png</file>
+        <file>Img/bg_grave.png</file>
+        <file>Img/background.png</file>
+        <file>Img/bg_osx.png</file>
+        <file>Img/bt_osx.png</file>
+        <file>Img/bg_osx2.png</file>
+        <file>Img/top_btn.png</file>
+        <file>Img/top_btn_2.png</file>
+        <file>Img/blog_black.png</file>
+        <file>Img/ubuntu.png</file>
+        <file>clause.txt</file>
+        <file>Img/uncheck.png</file>
+        <file>Img/hovercheck.png</file>
+        <file>Img/presscheck.png</file>
     </qresource>
 </RCC>

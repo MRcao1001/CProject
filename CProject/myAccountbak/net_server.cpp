@@ -351,4 +351,19 @@ QList<QString> net_server::showtable_server(){
     return list1;
 }
 
+QString net_server::getClause(){
+    qDebug()<<"net_server::getClause--->debug:"<<"star";
+    int fd_session = open("./clause.txt",O_RDONLY);
+    if(-1 == fd_session){
+        qDebug()<<"net_server::relogin--->debug:"<<"open file error";
+        return "null";
+    }
 
+
+    char info[41000] = {'\0'};
+    int ret = 0;
+    ret =read(fd_session,info,40960);
+    QString str(info);
+    qDebug()<<"net_server::getClause--->debug:"<<"end";
+    return str;
+}

@@ -35,6 +35,10 @@
 #include <QTableWidget>
 #include <QHeaderView>
 #include <QTreeWidget>
+#include <QComboBox>
+#include <QMenu>
+#include <QMenuBar>
+#include <QAction>
 namespace Ui {
 class appDisplay;
 }
@@ -56,20 +60,37 @@ public slots:
     void slt_setPageWidget();
     void showTable();
     void showTree(QString username_tostps);
+    void addFunc();
+    void delFunc();
 private:
     Ui::appDisplay *ui;
     int row=0;
     int colum=0;
-//QLayout *Background-layout;
+
     QVBoxLayout *background_layout;
     //----1----
     //-head-layout
+    QFrame *headFrame;
+    QHBoxLayout *right_layout;
+    QVBoxLayout *left_top_layout;
+    QLabel *LOGO;
+    QLabel *app_name;
+    QLabel *menu_name;
+    QPushButton *read_page;
+    QPushButton *write_page;
+    QPushButton *send_mail;
+    QPushButton *look_firend;
+    QPushButton *chat;
+    QPushButton *message_box;
+    QPushButton *aboutme;
+
     QHBoxLayout *head_layout;
+
     //--h_user_img_layout
     QVBoxLayout *h_user_img_layout;
     QPushButton *h_user_img_button;
     //--h_user_info_layout
-    QVBoxLayout *h_user_info_layout;
+    QHBoxLayout *h_user_info_layout;
     QPushButton *h_user_name_button;
     QLabel *h_user_leavl_label;
     QLabel *h_user_vip_label;
@@ -155,6 +176,8 @@ private:
     QLabel *info_lable;
     //  tip_img_label
     QLabel *tip_img_label;
+    QGraphicsDropShadowEffect *effectlabel_reg;
+
     };
 
 #endif // APPDISPLAY_H

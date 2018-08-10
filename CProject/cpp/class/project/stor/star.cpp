@@ -14,7 +14,7 @@ int exchange(string num_c){
         {
             return 0;
         }
-    } 
+    }
     return std::atoi(num_c.c_str());
 }
 void Shopping()
@@ -121,7 +121,7 @@ void Shopping()
                 {
                     cout << "您要买多少包法式小面包呢: ";
                     cin >> num_c;
-                    num = exchange(num_c);                    
+                    num = exchange(num_c);
                     if (num > Wh.getGoodsNum("bread"))
                     {
                         cout << "库存不足,请重试..." << endl;

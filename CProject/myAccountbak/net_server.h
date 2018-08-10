@@ -15,6 +15,7 @@ public:
     int writeToSession(const char *session);
     QList<QString> showTree_public_server(QString username);
     QList<QString> showtable_server();
+    QString getClause();
 private:
     int socketfd;
     QString please_login = "请登录/注册";

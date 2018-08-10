@@ -18,6 +18,7 @@ public:
     ~wating();
 public slots:
 
+
 signals:
     void loading();
 

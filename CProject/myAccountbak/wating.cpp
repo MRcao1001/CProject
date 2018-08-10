@@ -18,14 +18,15 @@ wating::wating(QWidget *parent) :
     label->setScaledContents(true);
     label->setMovie(movie);
     movie->start();
-
-    timer = new QTimer(this);
-    QTimer::singleShot(2000, this, SIGNAL(loading()));
-    QTimer::singleShot(2000, this, SLOT(close()));
+    qDebug()<<"loading";
+    connect(this,SIGNAL(loading()),this,SLOT(close()));
 }
 
 
 wating::~wating()
 {
+    delete background;
+    delete label;
+    delete movie;
     delete ui;
 }
