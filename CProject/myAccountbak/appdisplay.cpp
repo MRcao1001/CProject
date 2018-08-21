@@ -35,6 +35,7 @@ appDisplay::appDisplay(QWidget *parent) : QWidget(parent),
     connect(read_page, &QPushButton::clicked, this, &appDisplay::slt_setPageWidget);
     connect(write_page, &QPushButton::clicked, this, &appDisplay::slt_setPageWidget);
     connect(send_mail, &QPushButton::clicked, this, &appDisplay::slt_setPageWidget);
+    connect(look_firend,&QPushButton::clicked, this, &appDisplay::slt_setPageWidget);
 }
 
 void appDisplay::addFunc()
@@ -107,7 +108,7 @@ void appDisplay::InitializationWidget()
     sender_label = new QLabel;                  //邮件发送者提示
     sender_name = new QLineEdit;                //邮件发送者输入框
     reciver_label = new QLabel;                 //邮件接受者提示
-    reciver_name = new QLineEdit;               //邮件接受者输入框
+    reciver_name = new QComboBox;               //邮件接受者输入框
     topic_label = new QLabel;                   //主题提示
     topic_name = new QLineEdit;                 //主题输入框
     write_mail_label = new QLabel;              //邮件正文提示
@@ -127,6 +128,7 @@ void appDisplay::InitializationWidget()
     info_lable = new QLabel();                  //信息内容-----未实现
     tip_img_label = new QLabel();               //信息图标:错误信息 提示信息 完成提示-----未实现
     effectlabel_reg = new QGraphicsDropShadowEffect;
+    effectlabel_index = new QGraphicsDropShadowEffect;
 }
 
 /*一般函数在初始化所有部件之后立即调用,来实现窗口的静态布局*/
@@ -204,7 +206,7 @@ void appDisplay::SetUpTheLayout()
     //这里放置树形结构
     treeWidget = new QTreeWidget();
     treeWidget->setColumnCount(1);
-    treeWidget->setFixedWidth(20);
+//    treeWidget->setFixedWidth(20);
     treeWidget->setHeaderHidden(true);
 
     treeWidget->setStyleSheet("QTreeWidget::item{height:40px;};background-color:rgb(0,0,0,0);");
@@ -259,7 +261,7 @@ void appDisplay::SetUpTheLayout()
     send_mail->setFont(QFont("anjalioldlipi", 10, QFont::Normal));
     look_firend->setStyleSheet(QString(style_str4));
     look_firend->setFixedSize(300, 60);
-    look_firend->setText("我的好友");
+    look_firend->setText("我的主页");
     look_firend->setFont(QFont("anjalioldlipi", 10, QFont::Normal));
     chat->setStyleSheet(QString(style_str5));
     chat->setFixedSize(300, 60);
@@ -351,17 +353,21 @@ void appDisplay::SetUpTheLayout()
     about_story->setFixedHeight(80);
     //        write_story->resize(1200,800);
     title_label->setText(u8"文章标题");
-    about_label->setText(u8"摘要");
+    title_label->setStyleSheet("color:#909090");
+    title_label->setFont(QFont("Normal",16,QFont::Normal));
+    //about_label->setText(u8"摘要");
     edit_label->setText(u8"正文");
     subimt_button_write->setStyleSheet(QString("QPushButton{border-image: url(:/Img/upload.png);border:none;border-radius:30px;padding:5px 50px;}"));
     subimt_button_write->setFixedSize(32, 32);
     empty_button_write->setStyleSheet(QString("QPushButton{border-image: url(:/Img/clear.png);border:none;border-radius:30px;padding:5px 50px;}"));
     empty_button_write->setFixedSize(32, 32);
-
+    page_title->setStyleSheet("color:#707070;border:1px groove #dadada;border-radius:10px;padding:2px 4px;background:rgb(246, 246, 246);padding:5px;padding-left:20px;");
+    page_title->setFont(QFont("nomarl",18,QFont::Bold));
+    write_story->setStyleSheet("border:1px groove #dadada;border-radius:10px;padding:2px 4px;background:rgb(246, 246, 246);padding:20px;");
     layout_write->addWidget(title_label);
     layout_write->addWidget(page_title);
-    layout_write->addWidget(about_label);
-    layout_write->addWidget(about_story);
+    //layout_write->addWidget(about_label);
+    //layout_write->addWidget(about_story);
     layout_write->addWidget(edit_label);
     layout_write->addWidget(write_story);
     layout_write->addLayout(work_button_layout_write);
@@ -387,6 +393,10 @@ void appDisplay::SetUpTheLayout()
     subimt_button_mail->setFixedSize(32, 32);
     empty_button_mail->setStyleSheet(QString("QPushButton{border-image: url(:/Img/save.png);border:none;border-radius:30px;padding:5px 50px;}"));
     empty_button_mail->setFixedSize(32, 32);
+    sender_name->setStyleSheet("border:1px groove #dadada;border-radius:10px;padding:2px 4px;background:rgb(246, 246, 246);padding:5px;");
+    reciver_name->setStyleSheet("padding:2px 4px;background:rgb(246, 246, 246);padding:5px;color:#202020");
+    topic_name->setStyleSheet("border:1px groove #dadada;border-radius:10px;padding:2px 4px;background:rgb(246, 246, 246);padding:5px;");
+    write_mail->setStyleSheet("border:1px groove #dadada;border-radius:10px;padding:2px 4px;background:rgb(246, 246, 246);padding:20px;");
 
     layout_mail->addWidget(sender_label);
     layout_mail->addWidget(sender_name);
@@ -408,6 +418,18 @@ void appDisplay::SetUpTheLayout()
 
     date_label->setFixedWidth(150);
     tip_img_label->setFixedSize(32, 32);
+
+    //对第四个容器进行布局
+    writeArea[3] = new QWidget;
+    QHBoxLayout *my_friend = new QHBoxLayout;
+    treeWidget->setStyleSheet("border:0px groove #fff;border-radius:10px;padding:2px 4px;background:rgb(246, 246, 246,80);padding:20px;");
+    effectlabel_index->setBlurRadius(30);        // 阴影圆角的大小
+    effectlabel_index->setColor(Qt::white);      //阴影的颜色
+    effectlabel_index->setOffset(0,2);
+    treeWidget->setGraphicsEffect(effectlabel_index);
+    my_friend->addWidget(treeWidget);
+    writeArea[3]->setLayout(my_friend);
+    stackwidget_work->addWidget(writeArea[3]);
 
     //----menu部分控件
 
@@ -513,6 +535,7 @@ void appDisplay::showinfo()
     story->clearContents(); //清空文章列表
     story->setRowCount(0);  //设置行为0,来清除空白行
     showTable();
+    sender_name->setText(h_user_name_button_txt);
     h_user_name_button->setText(h_user_name_button_txt);
     QString str = "旧梦   【" + h_user_name_button_txt + "】  前尘浅唱";
     char *caMsg = NULL;
@@ -532,8 +555,10 @@ void appDisplay::showinfo()
     }
     caMsg = temp.data();
     this->setWindowTitle(QObject::tr(caMsg));
+
     //点击刷新按钮或者重新登录时刷新树形结构
     treeWidget->clear(); //清空树形结构的所有内容
+    reciver_name->clear();
     //重新生成父列表
     item_public = new QTreeWidgetItem(treeWidget, QStringList(QString("所有文章")));
     item_public->setIcon(0, QIcon(":/Img/public.png"));
@@ -544,7 +569,6 @@ void appDisplay::showinfo()
     showTree("public");
     showTree(h_user_name_button_txt);
     showTree(h_user_name_button_txt + "Msg");
-
     return;
 }
 
@@ -597,10 +621,13 @@ void appDisplay::slt_setPageWidget()
     QString style_str1_p = "QPushButton{color:#fff;background:#2d61e0;border:0px;text-align : left; padding-left:70px}";
     QString style_str2_p = "QPushButton{color:#fff;background:#2d61e0;border:0px;text-align : left; padding-left:70px}";
     QString style_str3_p = "QPushButton{color:#fff;background:#2d61e0;border:0px;text-align : left; padding-left:70px}";
-    QString style_str4_p = "QPushButton{color:#fff;background:#2d61e0;border:0px;text-align : left; padding-left:70px}";
+    QString style_str4_p = "QPushButton{color:#202020;background:rgb(255,255,255,60);border:0px;text-align : left; padding-left:70px}";
     QString style_str5_p = "QPushButton{color:#fff;background:#2d61e0;border:0px;text-align : left; padding-left:70px}";
     QString style_str6_p = "QPushButton{color:#fff;background:#2d61e0;border:0px;text-align : left; padding-left:70px}";
     QString style_str7_p = "QPushButton{color:#fff;background:#2d61e0;border:0px;text-align : left; padding-left:70px}";
+
+    headFrame->setStyleSheet("background-image:url(:/Img/bg_osx.png)");
+
     //获取触发槽的是哪个部件所发出的信号，并获取到那个指针
     QPushButton *widget = static_cast<QPushButton *>(sender());
     if (widget == read_page)
@@ -635,6 +662,18 @@ void appDisplay::slt_setPageWidget()
         message_box->setStyleSheet(QString(style_str6));
         aboutme->setStyleSheet(QString(style_str7));
         stackwidget_work->setCurrentIndex(2);
+    }
+    else if(widget == look_firend){
+        read_page->setStyleSheet(QString(style_str1));
+        write_page->setStyleSheet(QString(style_str2));
+        send_mail->setStyleSheet(QString(style_str3));
+        look_firend->setStyleSheet(QString(style_str4_p));
+        chat->setStyleSheet(QString(style_str5));
+        message_box->setStyleSheet(QString(style_str6));
+        aboutme->setStyleSheet(QString(style_str7));
+        stackwidget_work->setCurrentIndex(3);
+        headFrame->setStyleSheet("background-image:url(:/Img/Bg_User_Index.png)");
+
     }
 }
 
@@ -713,6 +752,8 @@ void appDisplay::showTree(QString username_tostps)
             QString info = getlist1.at(i);
             QTreeWidgetItem *item = new QTreeWidgetItem(item_firend, QStringList(QString(info)));
             item_firend->addChild(item);
+            qDebug()<<"showtree debug" << info << endl;
+            reciver_name->addItem(info);
         }
     }
     else

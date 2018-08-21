@@ -39,6 +39,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QAction>
+#include <QComboBox>
 namespace Ui {
 class appDisplay;
 }
@@ -134,7 +135,7 @@ private:
     QPushButton *send_mail_button;
     //  edit_area_layout
     QStackedWidget *stackwidget_work;
-    QWidget *writeArea[3];//这是主界面实现标签切换界面的容器
+    QWidget *writeArea[4];//这是主界面实现标签切换界面的容器
     QVBoxLayout *layout_write;
     QLabel *title_label;
     QLineEdit *page_title;
@@ -148,7 +149,7 @@ private:
     QLabel *sender_label;
     QLineEdit *sender_name;
     QLabel *reciver_label;
-    QLineEdit *reciver_name;
+    QComboBox *reciver_name;
     QLabel *topic_label;
     QLineEdit *topic_name;
     QLabel *write_mail_label;
@@ -177,6 +178,7 @@ private:
     //  tip_img_label
     QLabel *tip_img_label;
     QGraphicsDropShadowEffect *effectlabel_reg;
+    QGraphicsDropShadowEffect *effectlabel_index;
 
     };
 

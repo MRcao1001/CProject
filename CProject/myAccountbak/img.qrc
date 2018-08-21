@@ -91,5 +91,8 @@
         <file>Img/uncheck.png</file>
         <file>Img/hovercheck.png</file>
         <file>Img/presscheck.png</file>
+        <file>Img/loading_mac.gif</file>
+        <file>Img/paper.jpg</file>
+        <file>Img/Bg_User_Index.png</file>
     </qresource>
 </RCC>

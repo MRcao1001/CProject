@@ -23,7 +23,7 @@ myWidget::myWidget(QWidget *parent)
     palette.setColor(QPalette::Background, Qt::white);
 
     this->setPalette(palette);
-    this->setFixedSize(550, 700);
+    this->setFixedSize(500, 700);
     this->setWindowTitle(QObject::tr("欢迎登录，注册 "));
     this->setStyleSheet("background-image:url(:/Img/bg_osx.png)");
     //初始化界面元素
@@ -274,6 +274,25 @@ void myWidget::set_up_layout()
     layout_login->addStretch();
     layout_login->addLayout(group);
     layout_login->addStretch();
+    QHBoxLayout *loading = new QHBoxLayout;
+    label_laoding = new QLabel(this);
+    label_height = new QLabel(this);
+    label_height->setFixedHeight(22);
+    label_height->setStyleSheet("background:rgb(0,0,0,0)");
+    label_laoding->setGeometry(0, 0, 22, 22);
+    movie_loading = new QMovie(":/Img/loading_mac.gif");
+    movie_loading->setScaledSize(QSize(22,22));
+    label_laoding->setScaledContents(true);
+    label_laoding->setStyleSheet("background:rgb(0,0,0,0)");
+    label_laoding->setMovie(movie_loading);
+    movie_loading->start();
+    label_laoding->hide();
+    loading->addStretch();
+    loading->addWidget(label_height);
+    loading->addWidget(label_laoding);
+    loading->addStretch();
+    layout_login->addLayout(loading);
+    layout_login->addStretch();
     layout_login->addLayout(button_group);
     layout_login->addStretch();
     layout_login->addLayout(login_tips);
@@ -375,10 +394,15 @@ void myWidget::set_up_layout()
     reg_tips->addStretch();
     reg_tips->addWidget(reg_tip1);
     reg_tips->addStretch();
-    tips1->setStyleSheet("margin-top:8px;background:rgb(0,0,0,0)");
-    tips2->setStyleSheet("margin-top:8px;background:rgb(0,0,0,0)");
-    tips3->setStyleSheet("margin-top:8px;background:rgb(0,0,0,0)");
-    tips4->setStyleSheet("margin-top:8px;background:rgb(0,0,0,0)");
+
+    tips1->setStyleSheet("background:#f2f2f2;border:none;padding:3px;color:#909090;");
+    tips1->setFixedSize(32,32);
+    tips2->setStyleSheet("background:#f1f1f1;border:none;padding:3px;color:#909090");
+    tips2->setFixedSize(32,32);
+    tips3->setStyleSheet("background:#f0f0f0;border:none;padding:3px;color:#909090");
+    tips3->setFixedSize(32,32);
+    tips4->setStyleSheet("background:#efefef;border:none;padding:3px;color:#909090");
+    tips4->setFixedSize(32,32);
 
     reg_pic_group->addWidget(reg_username_pic);
     reg_pic_group->addStretch();
@@ -408,6 +432,24 @@ void myWidget::set_up_layout()
     reg_button_group->addWidget(reg_btn);
     //   reg_button_group->addStretch();
 
+    QHBoxLayout *loading_reg = new QHBoxLayout;
+    label_laoding_reg = new QLabel(this);
+    label_height_reg = new QLabel(this);
+    label_height_reg->setFixedHeight(22);
+    label_height_reg->setStyleSheet("background:rgb(0,0,0,0)");
+    label_laoding_reg->setGeometry(0, 0, 22, 22);
+    movie_loading_reg = new QMovie(":/Img/loading_mac.gif");
+    movie_loading_reg->setScaledSize(QSize(22,22));
+    label_laoding_reg->setScaledContents(true);
+    label_laoding_reg->setStyleSheet("background:rgb(0,0,0,0)");
+    label_laoding_reg->setMovie(movie_loading);
+    movie_loading_reg->start();
+    label_laoding_reg->hide();
+    loading_reg->addStretch();
+    loading_reg->addWidget(label_height_reg);
+    loading_reg->addWidget(label_laoding_reg);
+    loading_reg->addStretch();
+
     reg_group->addStretch();
     reg_group->addLayout(reg_pic_group);
     reg_group->addLayout(reg_input_group);
@@ -420,6 +462,8 @@ void myWidget::set_up_layout()
     layout_reg->addLayout(pic_layout_reg);
     layout_reg->addStretch(2);
     layout_reg->addLayout(reg_group);
+    layout_reg->addStretch(1);
+    layout_reg->addLayout(loading_reg);
     layout_reg->addStretch(1);
     layout_reg->addLayout(reg_button_group);
     layout_reg->addStretch(1);
@@ -525,6 +569,10 @@ void myWidget::myclose()
     this->close();
 }
 
+void myWidget::error_login(){
+    label_laoding->hide();
+    QMessageBox::about(this, tr("提示"), tr("\n   用户名或密码错误    \n"));
+}
 /*槽函数:点击登录按钮执行登录操作,调用net_server的login_server方法*/
 void myWidget::login_server()
 {
@@ -539,33 +587,33 @@ void myWidget::login_server()
         QMessageBox::about(this, tr("无法登录"), tr("\n        用户名或者密码为空！         \n"));
         return;
     }
-    wating *w = new wating(this);
-    w->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-    w->setWindowModality(Qt::ApplicationModal);
-    w->move(880, 450);
-    w->show();
-    connect(w, SIGNAL(loading()), this, SLOT(myclose()));
-    connect(this, SIGNAL(server_is_returned_true()), w, SIGNAL(loading()));
-    connect(this, SIGNAL(server_is_returned_false()), w, SLOT(close()));
+//    wating *w = new wating(this);
+//    w->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+//    w->setWindowModality(Qt::ApplicationModal);
+//    w->move(880, 450);
+//    w->show();
+//    connect(w, SIGNAL(loading()), this, SLOT(myclose()));
+//    connect(this, SIGNAL(server_is_returned_true()), w, SIGNAL(loading()));
+//    connect(this, SIGNAL(server_is_returned_false()), w, SLOT(close()));
     int ret = net.login_server(username_str, password_str);
     qDebug() << "myWidget::login_server--->获取到loginserver的返回值" << ret << endl;
     login_btn->setText(u8"完 成");
+    label_laoding->show();
     //在获取到返回值之后停顿一秒来欣赏美妙的loading动画
     if (ret == 1)
     {
-        QTimer::singleShot(2000, this, SIGNAL(server_is_returned_true()));
+        QTimer::singleShot(2000, this, SLOT(myclose()));
         return;
     }
 
     else if (ret == 0)
     {
-        QTimer::singleShot(1000, this, SIGNAL(server_is_returned_false()));
-        QMessageBox::about(this, tr("提示"), tr("\n   用户名或密码错误    \n"));
+        QTimer::singleShot(1000, this, SLOT(error_login()));
         return;
     }
     else
     {
-        QTimer::singleShot(1000, this, SIGNAL(server_is_returned_false()));
+        label_laoding->hide();
         QMessageBox::about(this, tr("提示"), tr("无法连接到服务器，请检查网络连接后再试！"));
         return;
     }
@@ -639,9 +687,11 @@ void myWidget::reg_server()
         tips4->setPixmap(tips_true_img);
         tips4->resize(tips_true_img.width(), tips_true_img.height());
         int ret = net.reg_server(reg_username_str, reg_password_str, reg_phone_str);
+        label_laoding_reg->show();
         if (ret == 1)
         {
             QMessageBox::about(this, tr("提示"), tr("注册成功"));
+            label_laoding_reg->hide();
             //this->close();
             pageButton->setStyleSheet(QString("QPushButton{font-size:32px;color:#404040;background:#fff;border:none;margin-top:20px;margin-left:10px;}\
                                           QPushButton:hover{color:#707070;}\
@@ -656,17 +706,20 @@ void myWidget::reg_server()
         else if (ret == 0)
         {
             QMessageBox::about(this, tr("提示"), tr("注册失败"));
+            label_laoding_reg->hide();
             return;
         }
 
         else if (ret == 2)
         {
             QMessageBox::about(this, tr("提示"), tr("用户已经被注册，请更换用户名"));
+            label_laoding_reg->hide();
             return;
         }
         else
         {
             QMessageBox::about(this, tr("提示"), tr("无法连接到服务器，请检查网络连接后再试！"));
+            label_laoding_reg->hide();
             return;
         }
     }
@@ -690,3 +743,4 @@ void myWidget::m_isChecked()
         qApp->processEvents();
     }
 }
+

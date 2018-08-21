@@ -37,6 +37,7 @@ public slots:
     void login_server();//登录处理函数
     void reg_server();//注册处理函数
     void myclose();
+    void error_login();
     void m_isChecked();
 
 signals:
@@ -125,6 +126,14 @@ private:
     QHBoxLayout *clause_button_box;
     QPushButton *clause_back;
     QPushButton *clause_next;
+
+    QMovie *movie_loading;
+    QLabel *label_laoding;
+    QLabel *label_height;
+
+    QMovie *movie_loading_reg;
+    QLabel *label_laoding_reg;
+    QLabel *label_height_reg;
 };
 
 #endif // MYWIDGET_H
